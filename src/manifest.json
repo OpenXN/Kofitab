@@ -3,6 +3,7 @@
     "name": "Kofitab",
     "version": "1.0.0",
     "description": "Your new homepage. Highly customizable with plugins and easy to use.",
+    "default_locale": "en",
     "icons": {
         "48": "icons/icon.png"
     },

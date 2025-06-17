@@ -1,0 +1,23 @@
+html,
+body {
+    margin: 0;
+    height: 100%;
+}
+#wallpaper-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+}
+#wallpaper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+}
+body {
+    background-color: #000000;
+}

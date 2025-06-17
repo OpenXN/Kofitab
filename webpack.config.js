@@ -27,6 +27,8 @@ export default {
             patterns: [
                 { from: "src/manifest.json", to: "manifest.json" },
                 { from: "src/views/index.html", to: "index.html" },
+                { from: "src/assets", to: "assets" },
+                { from: "_locales", to: "_locales" },
             ],
         }),
     ],
