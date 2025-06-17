@@ -4,7 +4,7 @@ enum Settings {
     WidgetsButtonVisible = "widgetsButtonVisible",
     Wallpaper = "wallpaper",
     WallpaperFit = "wallpaperFit",
-    CustomTitle = "CustomTitleitle",
+    CustomTitle = "CustomTitle",
     Language = "language",
     DeveloperMode = "developerMode",
     Themes = "themes",
