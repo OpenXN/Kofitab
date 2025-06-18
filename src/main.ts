@@ -22,13 +22,8 @@ async function init() {
     Log.Debug("Setting up wallpaper...");
     setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
 
-    if (SettingsLoader.getValue(Settings.MenuButtonVisible) === "true") {
-        SettingsButtonManager.addButton();
-    }
-
-    if (SettingsLoader.getValue(Settings.SettingsButtonVisible) === "true") {
-        MenuButtonManager.addButton();
-    }
+    SettingsButtonManager.addButton();
+    MenuButtonManager.addButton();
 
     Log.Debug("Loading styles...");
 

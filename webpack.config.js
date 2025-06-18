@@ -1,6 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 import CopyWebpackPlugin from "copy-webpack-plugin";
+// import WebpackObfuscator from "webpack-obfuscator";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -31,6 +32,17 @@ export default {
                 { from: "_locales", to: "_locales" },
             ],
         }),
+        /* new WebpackObfuscator(
+            {
+                rotateStringArray: true,
+                compact: true,
+                deadCodeInjection: true,
+                deadCodeInjectionThreshold: 1,
+                stringArray: true,
+                stringArrayThreshold: 1,
+            },
+            [],
+        ), */
     ],
     mode: "production",
 };
