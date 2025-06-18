@@ -25,6 +25,8 @@ const ThemeLoader = {
         if (LOCAL_THEMES.has(id)) {
             url = `./assets/styles/${id}.css`;
             Log.Debug(`Loading local theme: ${id} from ${url}`);
+        } else if (id.startsWith("https:")) {
+            url = id;
         } else {
             url = `${THEMES_BASE}/${id}.css`;
             Log.Debug(`Loading remote theme: ${id} from ${url}`);
