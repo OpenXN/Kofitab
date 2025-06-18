@@ -1,10 +1,10 @@
 enum Settings {
     EnableAnimations = "enableAnimations",
     SettingsButtonVisible = "settingsButtonVisible",
-    WidgetsButtonVisible = "widgetsButtonVisible",
+    MenuButtonVisible = "menuButtonVisible",
     Wallpaper = "wallpaper",
     WallpaperFit = "wallpaperFit",
-    CustomTitle = "CustomTitle",
+    CustomTitle = "customTitle",
     Language = "language",
     DeveloperMode = "developerMode",
     Themes = "themes",
@@ -44,7 +44,7 @@ const settings: Setting[] = [
         value: true,
     },
     {
-        setting: Settings.WidgetsButtonVisible,
+        setting: Settings.MenuButtonVisible,
         category: SettingsCategory.General,
         type: SettingType.Toggle,
         value: true,
@@ -87,22 +87,10 @@ const settings: Setting[] = [
     },
 ];
 
-function getSettingValue(key: Settings): string {
-    const storedValue = localStorage.getItem(key);
-    if (storedValue !== null && storedValue !== "") {
-        return storedValue;
-    }
+const SettingsManager = {
+    saveValue(key: Settings, value: string): void {
+        localStorage.setItem(key, value);
+    },
+};
 
-    const defaultValue = settings.find((s) => s.setting === key)!
-        .value as string;
-
-    saveSettingValue(key, defaultValue);
-
-    return defaultValue;
-}
-
-function saveSettingValue(key: Settings, value: string): void {
-    localStorage.setItem(key, value);
-}
-
-export { getSettingValue, Settings };
+export { SettingsManager, Settings, settings };

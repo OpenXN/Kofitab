@@ -1,6 +1,8 @@
-function setTitle(title: string) {
-    const tabTitle = document.getElementById("title") as HTMLImageElement;
-    tabTitle.textContent = title;
-}
+const TitleManager = {
+    setTitle(title: string) {
+        const tabTitle = document.getElementById("title") as HTMLImageElement;
+        tabTitle.textContent = title;
+    },
+};
 
-export { setTitle };
+export { TitleManager };

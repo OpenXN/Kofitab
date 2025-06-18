@@ -1,8 +1,11 @@
-import { loadThemes } from "./managers/themes/loader";
-import { getTitle } from "./managers/title/loader";
-import { setTitle } from "./managers/title/manager";
+import { SettingsButtonManager } from "./builders/ui/settings/manager";
+import { MenuButtonManager } from "./builders/ui/menu/manager";
+import { ThemeLoader } from "./managers/themes/loader";
+import { TitleLoader } from "./managers/title/loader";
+import { TitleManager } from "./managers/title/manager";
 import { Log } from "./utils/logger";
-import { getSettingValue, Settings } from "./utils/settings";
+import { SettingsLoader } from "./managers/settings/loader";
+import { Settings } from "./managers/settings/manager";
 import { setWallpaper } from "./utils/wallpaper";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -14,18 +17,26 @@ async function init() {
     Log.Debug("Loading config...");
 
     Log.Debug("Setting up tab title...");
-    setTitle(await getTitle());
+    TitleManager.setTitle(await TitleLoader.getTitle());
 
     Log.Debug("Setting up wallpaper...");
-    setWallpaper(getSettingValue(Settings.Wallpaper));
+    setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
+
+    if (SettingsLoader.getValue(Settings.MenuButtonVisible) === "true") {
+        SettingsButtonManager.addButton();
+    }
+
+    if (SettingsLoader.getValue(Settings.SettingsButtonVisible) === "true") {
+        MenuButtonManager.addButton();
+    }
 
     Log.Debug("Loading styles...");
 
-    if (!getSettingValue(Settings.EnableAnimations)) {
+    if (!SettingsLoader.getValue(Settings.EnableAnimations)) {
         //
     }
 
-    loadThemes(getSettingValue(Settings.Themes));
+    ThemeLoader.loadThemes(SettingsLoader.getValue(Settings.Themes));
 
     // loadStyle("default");
 }
