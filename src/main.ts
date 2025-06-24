@@ -7,7 +7,7 @@ import { Log } from "./utils/logger";
 import { SettingsLoader } from "./managers/settings/loader";
 import { Settings } from "./managers/settings/manager";
 import { setWallpaper } from "./utils/wallpaper";
-import { GridsManager } from "./builders/grids/manager";
+import { GridsBuilder } from "./builders/grids/builder";
 
 document.addEventListener("DOMContentLoaded", () => {
     init();
@@ -34,5 +34,8 @@ async function init() {
 
     ThemeLoader.loadThemes(SettingsLoader.getValue(Settings.Themes));
 
-    GridsManager.createGrids(14, 7);
+    GridsBuilder.createGrids(
+        Number(SettingsLoader.getValue(Settings.GridRows)),
+        Number(SettingsLoader.getValue(Settings.GridCells)),
+    );
 }

@@ -8,6 +8,8 @@ enum Settings {
     Language = "language",
     DeveloperMode = "developerMode",
     Themes = "themes",
+    GridRows = "gridRows",
+    GridCells = "gridCells",
 }
 
 enum SettingsCategory {
@@ -84,6 +86,18 @@ const settings: Setting[] = [
         category: SettingsCategory.Appearance,
         type: SettingType.Button,
         value: "default, animations",
+    },
+    {
+        setting: Settings.GridRows,
+        category: SettingsCategory.Advanced,
+        type: SettingType.Input,
+        value: 14,
+    },
+    {
+        setting: Settings.GridCells,
+        category: SettingsCategory.Advanced,
+        type: SettingType.Input,
+        value: 7,
     },
 ];
 
