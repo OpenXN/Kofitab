@@ -1,18 +1,18 @@
 {
-    "manifest_version": 2,
-    "name": "Kofitab",
-    "version": "1.0.0",
-    "description": "Your new homepage. Highly customizable with plugins and easy to use.",
-    "default_locale": "en",
-    "icons": {
-        "48": "icons/icon.png"
-    },
-    "chrome_url_overrides": {
-        "newtab": "index.html"
-    },
-    "background": {
-        "scripts": ["main.js"],
-        "persistent": false
-    },
-    "permissions": ["activeTab", "geolocation"]
+  "manifest_version": 2,
+  "name": "Kofitab",
+  "version": "1.0.0",
+  "description": "Your new homepage. Highly customizable and easy to use.",
+  "default_locale": "en",
+  "icons": {
+    "48": "icons/icon.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "background": {
+    "scripts": ["main.js"],
+    "persistent": false
+  },
+  "permissions": ["activeTab", "geolocation"]
 }

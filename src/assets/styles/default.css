@@ -32,7 +32,7 @@ body {
     justify-content: center;
     top: 10px;
     right: 10px;
-    z-index: 2;
+    z-index: 1;
     width: 44px;
     height: 44px;
     padding: 0;
@@ -42,14 +42,14 @@ body {
     background: transparent;
 }
 
-#menu-button {
+#widgets-button {
     position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     top: 10px;
     left: 10px;
-    z-index: 2;
+    z-index: 1;
     width: 44px;
     height: 44px;
     padding: 0;
@@ -59,24 +59,24 @@ body {
     background: transparent;
 }
 
-#menu-button.hidden,
+#widgets-button.hidden,
 #settings-button.hidden {
     opacity: 0;
     pointer-events: auto;
     transition: opacity 0.2s ease-in-out;
 }
 
-#menu-button.hidden:hover,
+#widgets-button.hidden:hover,
 #settings-button.hidden:hover {
     opacity: 1;
 }
 
-#menu-button:hover,
+#widgets-button:hover,
 #settings-button:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 
-#menu-button:hover {
+#widgets-button:hover {
     background-color: rgba(0, 0, 0, 0.1);
 }
 #settings-button:hover {
@@ -104,4 +104,81 @@ body {
     width: 100%;
     height: 100%;
     box-sizing: border-box;
+}
+
+#widgets-menu-container.hidden,
+#settings-menu-container.hidden {
+    display: none;
+}
+
+#widgets-menu-container.show {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(53, 61, 65, 0.3);
+    width: 100vw;
+    height: 200px;
+    padding: 20px;
+    z-index: 1;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+#settings-menu-container.show {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: rgba(53, 61, 65, 0.3);
+    width: 450px;
+    height: 100vh;
+    padding: 20px;
+    z-index: 1;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+#debug-console {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background-color: rgba(53, 61, 65, 0.3);
+    width: 450px;
+    height: 300px;
+    padding: 20px;
+    z-index: 1;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+}
+
+.menu-title {
+    font-size: 26px;
+    font-weight: bold;
+}
+.menu-comment {
+    font-size: 12px;
+}
+.text {
+    color: white;
+    font-family: "Caviar Dreams";
 }

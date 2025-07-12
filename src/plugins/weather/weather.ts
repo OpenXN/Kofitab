@@ -1,0 +1,1 @@
+function getWeather(city: string) {}

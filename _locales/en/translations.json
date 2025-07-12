@@ -1,4 +1,12 @@
 {
-    "lang": "en",
-    "New tab": "New tab"
+  "lang": "en",
+  "new-tab": "New tab",
+  "settings-title": "Settings",
+  "widgets-title": "Widgets",
+
+  "settings-general": "General",
+  "settings-appearance": "Appearance",
+  "settings-advanced": "Advanced",
+
+  "date-format": "mm/dd/yyyy"
 }
