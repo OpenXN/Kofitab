@@ -8,5 +8,17 @@
   "settings-appearance": "Appearance",
   "settings-advanced": "Advanced",
 
+  "enableAnimations": "Enable animations",
+  "settingsButtonVisible": "Hide settings button",
+  "widgetsButtonVisible": "Hide widgets button",
+  "wallpaper": "Wallpaper",
+  "wallpaperFit": "Wallpaper fit",
+  "customTitle": "Custom title",
+  "language": "Language",
+  "developerMode": "Developer mode",
+  "themes": "Themes",
+  "gridRows": "Grid rows",
+  "gridCells": "Grid cells",
+
   "date-format": "mm/dd/yyyy"
 }

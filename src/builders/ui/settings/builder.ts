@@ -1,4 +1,8 @@
-import { Settings } from "../../../managers/settings/manager";
+import {
+  Settings,
+  SettingsCategory,
+  settings,
+} from "../../../managers/settings/manager";
 import { SettingsLoader } from "../../../managers/settings/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
@@ -18,7 +22,58 @@ const SettingsMenuBuilder = {
 
       settings_menu_container.appendChild(title);
 
-      document.body.appendChild(settings_menu_container);
+      const settings_category_container = document.createElement("div");
+      settings_category_container.id = "settings-category-container";
+
+      const categories = {
+        [SettingsCategory.General]: getTranslation(
+          language,
+          "settings-general",
+        ),
+        [SettingsCategory.Appearance]: getTranslation(
+          language,
+          "settings-appearance",
+        ),
+        [SettingsCategory.Advanced]: getTranslation(
+          language,
+          "settings-advanced",
+        ),
+      };
+
+      if (settings_category_container) {
+        Object.entries(categories).forEach(([key, value]) => {
+          const category_container = document.createElement("div");
+          category_container.id = key + "-container";
+
+          const settings_container = document.createElement("div");
+          settings_container.className = "settings-container";
+
+          settings.forEach((setting) => {
+            if (setting.category === key) {
+              const settingElement = document.createElement("div");
+              settingElement.className = "settings-item text";
+              settingElement.textContent = getTranslation(
+                language,
+                setting.setting,
+              );
+
+              settings_container.appendChild(settingElement);
+            }
+          });
+
+          const settings_category_title = document.createElement("p");
+          settings_category_title.className = "category-title text";
+          settings_category_title.textContent = value;
+
+          category_container.append(settings_category_title);
+          category_container.append(settings_container);
+          settings_category_container.append(category_container);
+        });
+
+        settings_menu_container.append(settings_category_container);
+
+        document.body.append(settings_menu_container);
+      }
     }
   },
 

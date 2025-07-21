@@ -32,6 +32,7 @@ interface Setting {
   value: string | boolean | number;
 }
 
+// I should rename it, not? TODO
 const settings: Setting[] = [
   {
     setting: Settings.EnableAnimations,
@@ -109,4 +110,4 @@ const SettingsManager = {
   updateValue(key: Settings, value: string): void {},
 };
 
-export { SettingsManager, Settings, settings };
+export { SettingsManager, Settings, settings, SettingsCategory };
