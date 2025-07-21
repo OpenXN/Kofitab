@@ -6,7 +6,7 @@ import { TitleManager } from "./managers/title/manager";
 import { addDebugConsole, Log } from "./utils/logger";
 import { SettingsLoader } from "./managers/settings/loader";
 import { Settings } from "./managers/settings/manager";
-import { setWallpaper } from "./utils/wallpaper";
+import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,7 +21,7 @@ async function init() {
   TitleManager.setTitle(await TitleLoader.getTitle());
 
   Log.Debug("Setting up wallpaper...");
-  setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
+  WallpaperManager.setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
 
   SettingsMenuBuilder.addSettingsMenu();
   SettingsMenuBuilder.addSettingsMenuButton();

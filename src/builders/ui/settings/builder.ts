@@ -16,9 +16,6 @@ const SettingsMenuBuilder = {
       title.className = "menu-title text";
       title.textContent = getTranslation(language, "settings-title");
 
-      const comment = document.createElement("p");
-      comment.className = "menu-comment text";
-
       settings_menu_container.appendChild(title);
 
       document.body.appendChild(settings_menu_container);
@@ -49,7 +46,15 @@ const SettingsMenuBuilder = {
   },
 
   handleClick() {
-    alert("click");
+    const settings_menu_container = document.getElementById(
+      "settings-menu-container",
+    );
+
+    if (settings_menu_container?.className == "hidden") {
+      settings_menu_container.className = "show";
+    } else if (settings_menu_container?.className == "show") {
+      settings_menu_container.className = "hidden";
+    }
   },
 };
 

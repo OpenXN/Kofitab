@@ -46,7 +46,15 @@ const WidgetsMenuBuilder = {
   },
 
   handleClick() {
-    alert("click");
+    const widgets_menu_container = document.getElementById(
+      "widgets-menu-container",
+    );
+
+    if (widgets_menu_container?.className == "hidden") {
+      widgets_menu_container.className = "show";
+    } else if (widgets_menu_container?.className == "show") {
+      widgets_menu_container.className = "hidden";
+    }
   },
 };
 
