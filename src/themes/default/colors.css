@@ -1,0 +1,44 @@
+body {
+    background-color: #000000;
+}
+
+#widgets-button:hover,
+#settings-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    fill: #ffffff;
+}
+
+.widget-area.visible {
+    border: 1px dashed #3d3d3d;
+}
+
+#widgets-menu-container.show {
+    background-color: rgba(53, 61, 65, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#settings-menu-container.show {
+    background-color: rgba(53, 61, 65, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#settings-menu-container.show {
+    background-color: rgba(53, 61, 65, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+#debug-console {
+    background-color: rgba(53, 61, 65, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.settings-container {
+    background-color: rgba(53, 61, 65, 0.3);
+}
+
+.text {
+    color: white;
+}

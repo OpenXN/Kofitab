@@ -1,0 +1,27 @@
+{
+  "lang": "hu",
+  "new-tab": "Új lap",
+  "settings-title": "Beállítások",
+  "widgets-title": "Widgetek",
+
+  "settings-general": "Általános",
+  "settings-appearance": "Megjelenés",
+  "settings-advanced": "Haladó",
+
+  "enableAnimations": "Animációk engedélyezése",
+  "settingsButtonVisible": "Beállítások gomb elrejtése",
+  "widgetsButtonVisible": "Widget gomb elrejtése",
+  "wallpaper": "Háttérkép",
+  "wallpaperFit": "Háttérkép igazítása",
+  "customTitle": "Egyedi cím",
+  "language": "Nyelv",
+  "developerMode": "Fejlesztői mód",
+  "themes": "Témák",
+  "gridRows": "Rácssorok",
+  "gridCells": "Rácsoszlopok",
+  "font": "Betűtípus",
+
+  "date-format": "yyyy/mm/dd",
+
+  "author": "BXn4"
+}

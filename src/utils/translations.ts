@@ -1,7 +1,10 @@
 import en from "../../_locales/en/translations.json";
-import { SettingsManager, Settings } from "../managers/settings/manager";
+import hu from "../../_locales/hu/translations.json";
 
-const allTranslations: Record<string, Record<string, string>> = { en };
+import { SettingsManager, Settings } from "../managers/settings/manager";
+import { Log } from "./logger";
+
+const allTranslations: Record<string, Record<string, string>> = { en, hu };
 
 function getTranslation(language: string, key: string): string {
   if (!(language in allTranslations)) {
@@ -13,6 +16,7 @@ function getTranslation(language: string, key: string): string {
     return translations[key];
   }
 
+  Log.Warn(`Missing translation key: ${key} from language: ${language}`);
   return key;
 }
 

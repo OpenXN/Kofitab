@@ -19,6 +19,9 @@
   "themes": "Themes",
   "gridRows": "Grid rows",
   "gridCells": "Grid cells",
+  "font": "Font",
 
-  "date-format": "mm/dd/yyyy"
+  "date-format": "mm/dd/yyyy",
+
+  "author": "BXn4"
 }

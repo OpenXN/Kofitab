@@ -4,6 +4,7 @@ interface Theme {
   category?: string;
   author?: string;
   description?: string;
+  css?: Record<string, string>;
   thumbnail?: string;
   path?: string; // Using external themes are allowed!
 }

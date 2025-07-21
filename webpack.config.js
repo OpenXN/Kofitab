@@ -30,6 +30,7 @@ export default {
         { from: "src/views/index.html", to: "index.html" },
         { from: "src/assets", to: "assets" },
         { from: "_locales", to: "_locales" },
+        { from: "src/themes", to: "themes" },
       ],
     }),
   ],

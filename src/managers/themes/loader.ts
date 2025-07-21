@@ -1,9 +1,15 @@
 import { Log } from "../../utils/logger";
-import { THEMES_BASE } from "../../utils/consts";
+import { Theme } from "./manager";
 
-const LOCAL_THEMES = new Set(["animations"]);
+import themes from "../../themes/themes.json";
 
 const ThemeLoader = {
+  listAllThemes() {
+    for (const theme of themes) {
+      Log.Debug(`Theme ID: ${theme.id}, Path: ${theme.path}`);
+    }
+  },
+
   async loadThemes(ids: string) {
     const idList = ids
       .split(",")
@@ -12,6 +18,7 @@ const ThemeLoader = {
 
     for (const id of idList) {
       try {
+        Log.Debug(`Loading theme: ${id}`);
         await this.loadTheme(id);
       } catch (error) {
         console.error(`Failed to load theme: ${id}`, error);
@@ -20,28 +27,30 @@ const ThemeLoader = {
   },
 
   async loadTheme(id: string) {
-    let url: string;
+    // TODO: LOAD REMOTE THEMES
+    //
+    // Local themes (storing default themes)
+    const theme = themes.find((t) => t.id === id);
+    if (theme) {
+      /* Log.Debug(theme.path);
+      const response = await fetch(theme.path);
+      const themeJson = await response.json();
+      console.log(themeJson); */
 
-    if (LOCAL_THEMES.has(id)) {
-      url = `./assets/styles/${id}.css`;
-      Log.Debug(`Loading local theme: ${id} from ${url}`);
-    } else if (id.startsWith("https:")) {
-      url = id;
-    } else {
-      url = `${THEMES_BASE}/${id}.css`;
-      Log.Debug(`Loading remote theme: ${id} from ${url}`);
-    }
+      const themeConfig = await fetch(theme.path);
 
-    try {
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const css = await res.text();
-      const style = document.createElement("style");
-      style.textContent = css;
-      document.head.appendChild(style);
-      Log.Debug(`Style loaded: ${id} from ${url}`);
-    } catch (err) {
-      Log.Error(`Failed to load style '${id}' from ${url}: ${err}`);
+      const themeInfo = (await themeConfig.json()) as Theme;
+      for (const [key, value] of Object.entries(themeInfo.css ?? {})) {
+        Log.Debug(`Loading theme ${themeInfo.name} CSS files: ${key}`);
+
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
+        link.href = `../themes/${theme.id}/${value}`;
+        document.head.appendChild(link);
+      }
+
+      Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);
+      Log.Debug(`Theme CSS files: ${JSON.stringify(themeInfo.css)}`);
     }
   },
 };

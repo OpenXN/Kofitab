@@ -8,6 +8,7 @@ import { SettingsLoader } from "./managers/settings/loader";
 import { Settings } from "./managers/settings/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
+import { FontLoader } from "./managers/fonts/loader";
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -36,6 +37,11 @@ async function init() {
   }
 
   ThemeLoader.loadThemes(SettingsLoader.getValue(Settings.Themes));
+
+  // ThemeLoader.listAllThemes();
+
+  Log.Debug("Injecting fonts...");
+  FontLoader.injectFontsStyle();
 
   GridsBuilder.createGrids(
     Number(SettingsLoader.getValue(Settings.GridRows)),

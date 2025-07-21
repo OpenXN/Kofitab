@@ -1,0 +1,13 @@
+{
+  "id": "default",
+  "name": "Default",
+  "category": "Theme",
+  "author": "BXn4",
+  "description": "Default layout design",
+  "css": {
+    "base": "default.css",
+    "colors": "colors.css",
+    "animations": "animations.css"
+  },
+  "thumbnail": "themes/default/preview.png"
+}

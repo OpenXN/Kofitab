@@ -10,6 +10,7 @@ enum Settings {
   Themes = "themes",
   GridRows = "gridRows",
   GridCells = "gridCells",
+  Font = "font",
 }
 
 enum SettingsCategory {
@@ -86,7 +87,7 @@ const settings: Setting[] = [
     setting: Settings.Themes,
     category: SettingsCategory.Appearance,
     type: SettingType.Button,
-    value: "animations",
+    value: "default",
   },
   {
     setting: Settings.GridRows,
@@ -99,6 +100,12 @@ const settings: Setting[] = [
     category: SettingsCategory.Advanced,
     type: SettingType.Input,
     value: 7,
+  },
+  {
+    setting: Settings.Font,
+    category: SettingsCategory.Appearance,
+    type: SettingType.Input,
+    value: "Creato Display",
   },
 ];
 
