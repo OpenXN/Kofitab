@@ -1,18 +1,22 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Kofitab",
   "version": "1.0.0",
   "description": "Your new homepage. Highly customizable and easy to use.",
   "default_locale": "en",
+  "author": "Bence Fodor",
+  "homepage_url": "https://kofitab.net",
   "icons": {
-    "48": "icons/icon.png"
+    "128": "icons/icon.png"
+  },
+  "chrome_settings_overrides": {
+    "homepage": "index.html"
   },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
   "background": {
-    "scripts": ["main.js"],
-    "persistent": false
+    "scripts": ["main.js"]
   },
-  "permissions": ["activeTab", "geolocation"]
+  "permissions": ["activeTab", "geolocation", "storage"]
 }

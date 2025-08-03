@@ -40,17 +40,36 @@ const ThemeLoader = {
       const themeConfig = await fetch(theme.path);
 
       const themeInfo = (await themeConfig.json()) as Theme;
-      for (const [key, value] of Object.entries(themeInfo.css ?? {})) {
-        Log.Debug(`Loading theme ${themeInfo.name} CSS files: ${key}`);
+      // Allowing only: base, colors, animations and extra (extra if you want to add more things).
+      for (const [key, value] of Object.entries(themeInfo.styles ?? {})) {
+        if (
+          key !== "base" &&
+          key !== "colors" &&
+          key !== "animations" &&
+          key !== "extra"
+        ) {
+          continue;
+        }
+
+        Log.Debug(`Loading theme ${themeInfo.name} custom style: ${key}`);
 
         const link = document.createElement("link");
         link.rel = "stylesheet";
         link.href = `../themes/${theme.id}/${value}`;
+        link.id = `${themeInfo.id}-${key}`;
         document.head.appendChild(link);
       }
 
       Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);
-      Log.Debug(`Theme CSS files: ${JSON.stringify(themeInfo.css)}`);
+      Log.Debug(`Theme custom styles: ${JSON.stringify(themeInfo.styles)}`);
+    }
+  },
+
+  unloadTheme(id: string) {
+    const style = document.getElementById(id);
+    if (style?.parentNode) {
+      style.parentNode.removeChild(style);
+      Log.Debug(`Unloaded theme/style: ${id}`);
     }
   },
 };

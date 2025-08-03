@@ -43,6 +43,9 @@ async function init() {
   Log.Debug("Injecting fonts...");
   FontLoader.injectFontsStyle();
 
+  Log.Debug("Loading font...");
+  FontLoader.loadFont(SettingsLoader.getValue(Settings.Font));
+
   GridsBuilder.createGrids(
     Number(SettingsLoader.getValue(Settings.GridRows)),
     Number(SettingsLoader.getValue(Settings.GridCells)),

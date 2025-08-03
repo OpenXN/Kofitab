@@ -3,7 +3,7 @@ import { SettingsLoader } from "../settings/loader";
 import { getTranslation } from "../../utils/translations";
 
 const TitleLoader = {
-  async getTitle(): Promise<string> {
+  async getTitle() {
     const customTitle = SettingsLoader.getValue(Settings.CustomTitle);
     if (customTitle !== null && customTitle !== "") {
       if (customTitle.length < 24) {

@@ -9,6 +9,7 @@ body {
     width: 100%;
     height: 100vh;
     overflow: hidden;
+    user-select: none;
 }
 
 #wallpaper {
@@ -169,4 +170,20 @@ body {
 
 .text {
     font-family: "Arial";
+}
+
+#settings-footer-container {
+    margin: 30px;
+}
+
+.settings-type-toggle {
+}
+
+.settings-type-input {
+}
+
+.settings-type-select {
+}
+
+.settings-type-button {
 }

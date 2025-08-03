@@ -7,6 +7,12 @@ import { SettingsLoader } from "../../../managers/settings/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 
+import manifest from "../../../manifest.json";
+
+enum SettingsUI {
+  Toggle = `<input type="checkbox"> <span class="slider"></span>`,
+}
+
 const SettingsMenuBuilder = {
   addSettingsMenu() {
     const settings_menu_container = document.getElementById(
@@ -40,6 +46,16 @@ const SettingsMenuBuilder = {
         ),
       };
 
+      const settings_footer_container = document.createElement("div");
+      settings_footer_container.id = "settings-footer-container";
+
+      if (settings_footer_container) {
+        const version = document.createElement("span");
+        version.className = "text";
+        version.textContent = `Version: ${manifest.version}`;
+        settings_footer_container.appendChild(version);
+      }
+
       if (settings_category_container) {
         Object.entries(categories).forEach(([key, value]) => {
           const category_container = document.createElement("div");
@@ -71,6 +87,7 @@ const SettingsMenuBuilder = {
         });
 
         settings_menu_container.append(settings_category_container);
+        settings_menu_container.append(settings_footer_container);
 
         document.body.append(settings_menu_container);
       }
