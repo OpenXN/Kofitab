@@ -1,3 +1,5 @@
+import { Log } from "../../utils/logger";
+
 enum Settings {
   EnableAnimations = "enableAnimations",
   SettingsButtonVisible = "settingsButtonVisible",
@@ -22,6 +24,7 @@ enum SettingsCategory {
 enum SettingType {
   Toggle = "toggle",
   Input = "input",
+  Number = "number",
   Select = "select",
   Button = "button",
 }
@@ -87,18 +90,18 @@ const settings: Setting[] = [
     setting: Settings.Themes,
     category: SettingsCategory.Appearance,
     type: SettingType.Button,
-    value: "default",
+    value: "default[base,colors, animations]$",
   },
   {
     setting: Settings.GridRows,
     category: SettingsCategory.Advanced,
-    type: SettingType.Input,
+    type: SettingType.Number,
     value: 14,
   },
   {
     setting: Settings.GridCells,
     category: SettingsCategory.Advanced,
-    type: SettingType.Input,
+    type: SettingType.Number,
     value: 7,
   },
   {
@@ -111,10 +114,9 @@ const settings: Setting[] = [
 
 const SettingsManager = {
   saveValue(key: Settings, value: string): void {
+    Log.Debug(`Saved value: "${value}" for setting: ${key}`);
     localStorage.setItem(key, value);
   },
-
-  updateValue(key: Settings, value: string): void {},
 };
 
-export { SettingsManager, Settings, settings, SettingsCategory };
+export { SettingsManager, Settings, settings, SettingsCategory, SettingType };

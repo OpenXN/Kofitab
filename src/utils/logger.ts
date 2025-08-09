@@ -1,3 +1,6 @@
+// I know that, I could use console.log in each function,
+// but with this I dont need to format it each time, and easier to export it.
+
 type LogLevel = "INFO" | "DEBUG" | "WARN" | "ERROR" | "FATAL";
 
 const Log = {
@@ -9,7 +12,28 @@ const Log = {
 };
 
 function log(level: LogLevel, message: string): void {
-  console.log(`[${level}] ${message}`);
+  switch (level) {
+    case "INFO":
+      console.info(`[${level}] ${message}`);
+      break;
+
+    case "DEBUG":
+      console.debug(`[${level}] ${message}`);
+      break;
+
+    case "WARN":
+      console.warn(`[${level}] ${message}`);
+      break;
+
+    case "ERROR":
+    case "FATAL":
+      console.error(`[${level}] ${message}`);
+      break;
+
+    default:
+      console.log(`[${level}] ${message}`);
+      break;
+  }
 }
 
 function addDebugConsole() {

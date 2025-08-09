@@ -2,8 +2,14 @@ import { Settings } from "../settings/manager";
 import { SettingsLoader } from "../settings/loader";
 import { getTranslation } from "../../utils/translations";
 
+/**
+ * Responsible to get the tab title.
+ */
 const TitleLoader = {
-  async getTitle() {
+  /**
+   * Returns custom title if exist, else language default.
+   */
+  getTitle() {
     const customTitle = SettingsLoader.getValue(Settings.CustomTitle);
     if (customTitle !== null && customTitle !== "") {
       if (customTitle.length < 24) {

@@ -9,17 +9,19 @@ import { Settings } from "./managers/settings/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
+import { getVersion } from "./utils/tools";
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
 });
 
 async function init() {
-  Log.Debug("Initing Kofitab addon...");
+  Log.Info(`Kofitab by BXn4. Version: ${getVersion}`);
+  Log.Info("Any issues? -> https://github.com/OpenXN/Kofitab/issues");
   Log.Debug("Loading config...");
 
   Log.Debug("Setting up tab title...");
-  TitleManager.setTitle(await TitleLoader.getTitle());
+  TitleManager.setTitle(TitleLoader.getTitle());
 
   Log.Debug("Setting up wallpaper...");
   WallpaperManager.setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
@@ -31,11 +33,6 @@ async function init() {
   WidgetsMenuBuilder.addWidgetsMenuButton();
 
   Log.Debug("Loading styles...");
-
-  if (SettingsLoader.getValue(Settings.EnableAnimations) == "false") {
-    // NEED TO REMOVE THE ANIMATIONS SYTYLE
-  }
-
   ThemeLoader.loadThemes(SettingsLoader.getValue(Settings.Themes));
 
   // ThemeLoader.listAllThemes();
@@ -51,7 +48,7 @@ async function init() {
     Number(SettingsLoader.getValue(Settings.GridCells)),
   );
 
-  if (SettingsLoader.getValue(Settings.DeveloperMode) == "true") {
+  if (SettingsLoader.getValue(Settings.DeveloperMode) == String(true)) {
     addDebugConsole();
   }
 }

@@ -3,30 +3,62 @@ import { Theme } from "./manager";
 
 import themes from "../../themes/themes.json";
 
+/**
+ * ThemeLoader is responsible for loading custom themes:
+ * - Listing all available themes (these will be loaded)
+ * - Loading all themes, loading a new theme (single)
+ *   - After loading its will injects it in a style tag into the DOM
+ * - Unloading a theme / theme custom style
+ */
 const ThemeLoader = {
+  /**
+   * Lists all themes in console (debug) from the themes config.
+   */
   listAllThemes() {
     for (const theme of themes) {
       Log.Debug(`Theme ID: ${theme.id}, Path: ${theme.path}`);
     }
   },
 
+  /**
+   * Loads all the themes from the saved localStorage. First the theme ID (default),
+   * and its follows the theme parts (styles) in an array ([base, colors, animations]),
+   * and each theme sepperated by '$' char.
+   */
+
+  // default[name, etc]$asd[name, etc]
   async loadThemes(ids: string) {
     const idList = ids
-      .split(",")
+      .split("$")
       .map((id) => id.trim())
       .filter((id) => id.length > 0);
 
     for (const id of idList) {
+      let themeParts: string[] = []; // TODO: RENAME THEME STYLES TO THEME parts
+      const themeID = id.split("[")[0];
+
+      if (id.includes("[")) {
+        const themePart = id.split("[")[1].replace("]", "");
+        themeParts = themePart.split(",").map((s) => s.trim());
+        // Log.Debug(JSON.stringify(themeParts));
+      }
+
       try {
-        Log.Debug(`Loading theme: ${id}`);
-        await this.loadTheme(id);
-      } catch (error) {
-        console.error(`Failed to load theme: ${id}`, error);
+        Log.Debug(`Loading theme: ${themeID}`);
+        await this.loadTheme(themeID, themeParts);
+      } catch (err) {
+        // Forgot to remove the console.error. I was lazy to use the logger.
+        Log.Error(`Failed to load theme: ${themeID}. Reason: ${err}`);
       }
     }
   },
 
-  async loadTheme(id: string) {
+  /**
+   * Loads the specified theme by ID, and injects into the styles tag into the DOM.
+   * If you want to load a remote theme, you need a valid theme config file, which points to an custom CSS. (TODO)
+   * If the remote theme config file is invalid, it will ignores that theme. (TODO)
+   */
+  async loadTheme(id: string, themeParts: string[]) {
     // TODO: LOAD REMOTE THEMES
     //
     // Local themes (storing default themes)
@@ -42,12 +74,12 @@ const ThemeLoader = {
       const themeInfo = (await themeConfig.json()) as Theme;
       // Allowing only: base, colors, animations and extra (extra if you want to add more things).
       for (const [key, value] of Object.entries(themeInfo.styles ?? {})) {
-        if (
-          key !== "base" &&
-          key !== "colors" &&
-          key !== "animations" &&
-          key !== "extra"
-        ) {
+        if (!themeParts.includes(key)) {
+          Log.Warn(`Not valid theme part found for: ${key}`); // If the saved name is not the same.
+          continue;
+        }
+
+        if (themeParts.length > 0 && !themeParts.includes(key)) {
           continue;
         }
 
@@ -62,9 +94,14 @@ const ThemeLoader = {
 
       Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);
       Log.Debug(`Theme custom styles: ${JSON.stringify(themeInfo.styles)}`);
+    } else {
+      Log.Warn(`Failed to load theme: "${id}". Ignoring this theme`);
     }
   },
 
+  /**
+   * Unloads a specified theme, and removes it from the DOM, and from the enabled themes from the localStorage. (TODO)
+   */
   unloadTheme(id: string) {
     const style = document.getElementById(id);
     if (style?.parentNode) {

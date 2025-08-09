@@ -1,102 +1,115 @@
 import {
   Settings,
   SettingsCategory,
+  SettingType,
   settings,
 } from "../../../managers/settings/manager";
 import { SettingsLoader } from "../../../managers/settings/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
-
-import manifest from "../../../manifest.json";
+import { getVersion } from "../../../utils/tools";
 
 enum SettingsUI {
-  Toggle = `<input type="checkbox"> <span class="slider"></span>`,
+  Toggle = `<input type="checkbox"> <span class="toggle"></span>`,
+  Input = `<input type="text"> <span class="text-input"></span>`,
+  Select = `<select class="select">
+              <option value=""></option>
+            </select>`,
+  Number = `<input type="number"> <span class="number-input"></span>`,
+  Button = `<input type="button"> <span class="button"></span>`,
 }
 
 const SettingsMenuBuilder = {
   addSettingsMenu() {
     const settings_menu_container = document.getElementById(
       "settings-menu-container",
-    );
+    )!;
+    const language = SettingsLoader.getValue(Settings.Language);
 
-    if (settings_menu_container) {
-      const language = SettingsLoader.getValue(Settings.Language);
+    const title = document.createElement("p");
+    title.className = "menu-title text";
+    title.textContent = getTranslation(language, "settings-title");
 
-      const title = document.createElement("p");
-      title.className = "menu-title text";
-      title.textContent = getTranslation(language, "settings-title");
+    settings_menu_container.appendChild(title);
 
-      settings_menu_container.appendChild(title);
+    const settings_category_container = document.createElement("div");
+    settings_category_container.id = "settings-category-container";
 
-      const settings_category_container = document.createElement("div");
-      settings_category_container.id = "settings-category-container";
+    const categories = {
+      [SettingsCategory.General]: getTranslation(language, "settings-general"),
+      [SettingsCategory.Appearance]: getTranslation(
+        language,
+        "settings-appearance",
+      ),
+      [SettingsCategory.Advanced]: getTranslation(
+        language,
+        "settings-advanced",
+      ),
+    };
 
-      const categories = {
-        [SettingsCategory.General]: getTranslation(
-          language,
-          "settings-general",
-        ),
-        [SettingsCategory.Appearance]: getTranslation(
-          language,
-          "settings-appearance",
-        ),
-        [SettingsCategory.Advanced]: getTranslation(
-          language,
-          "settings-advanced",
-        ),
-      };
+    const settings_footer_container = document.createElement("div");
+    settings_footer_container.id = "settings-footer-container";
 
-      const settings_footer_container = document.createElement("div");
-      settings_footer_container.id = "settings-footer-container";
+    if (settings_footer_container) {
+      const version = document.createElement("span");
+      version.className = "text";
+      version.textContent = `Version: ${getVersion}`;
+      settings_footer_container.appendChild(version);
+    }
 
-      if (settings_footer_container) {
-        const version = document.createElement("span");
-        version.className = "text";
-        version.textContent = `Version: ${manifest.version}`;
-        settings_footer_container.appendChild(version);
-      }
+    if (settings_category_container) {
+      Object.entries(categories).forEach(([key, value]) => {
+        const category_container = document.createElement("div");
+        category_container.id = key + "-container";
 
-      if (settings_category_container) {
-        Object.entries(categories).forEach(([key, value]) => {
-          const category_container = document.createElement("div");
-          category_container.id = key + "-container";
+        const settings_container = document.createElement("div");
+        settings_container.className = "settings-container";
 
-          const settings_container = document.createElement("div");
-          settings_container.className = "settings-container";
+        settings.forEach((setting) => {
+          if (setting.category === key) {
+            const settingElement = document.createElement("div");
+            settingElement.className = "settings-item text";
+            settingElement.textContent = getTranslation(
+              language,
+              setting.setting,
+            );
 
-          settings.forEach((setting) => {
-            if (setting.category === key) {
-              const settingElement = document.createElement("div");
-              settingElement.className = "settings-item text";
-              settingElement.textContent = getTranslation(
-                language,
-                setting.setting,
-              );
-
-              settings_container.appendChild(settingElement);
+            switch (setting.type) {
+              case SettingType.Toggle:
+                break;
+              case SettingType.Input:
+                break;
+              case SettingType.Select:
+                break;
+              case SettingType.Button:
+                break;
             }
-          });
 
-          const settings_category_title = document.createElement("p");
-          settings_category_title.className = "category-title text";
-          settings_category_title.textContent = value;
-
-          category_container.append(settings_category_title);
-          category_container.append(settings_container);
-          settings_category_container.append(category_container);
+            settings_container.appendChild(settingElement);
+          }
         });
 
-        settings_menu_container.append(settings_category_container);
-        settings_menu_container.append(settings_footer_container);
+        const settings_category_title = document.createElement("p");
+        settings_category_title.className = "category-title text";
+        settings_category_title.textContent = value;
 
-        document.body.append(settings_menu_container);
-      }
+        category_container.append(settings_category_title);
+        category_container.append(settings_container);
+        settings_category_container.append(category_container);
+      });
+
+      settings_menu_container.append(settings_category_container);
+      settings_menu_container.append(settings_footer_container);
+
+      document.body.append(settings_menu_container);
     }
   },
 
   addSettingsMenuButton() {
     const settingsButton = document.createElement("button");
     settingsButton.id = "settings-button";
+
+    const container = document.getElementById("container")!;
 
     if (SettingsLoader.getValue(Settings.SettingsButtonVisible) == "false") {
       settingsButton.classList.add("hidden");
@@ -112,7 +125,10 @@ const SettingsMenuBuilder = {
 
     settingsButton.appendChild(icon);
 
-    settingsButton.addEventListener("click", this.handleClick);
+    settingsButton.addEventListener("click", this.handleClick.bind(this));
+
+    // I needed this, sorry. Easier to close the menu. Sorry about miss clicks.
+    container.addEventListener("click", this.hideSettingsMenu);
 
     document.body.appendChild(settingsButton);
   },
@@ -122,11 +138,27 @@ const SettingsMenuBuilder = {
       "settings-menu-container",
     );
 
+    // Log.Debug(settings_menu_container!.className);
+
     if (settings_menu_container?.className == "hidden") {
-      settings_menu_container.className = "show";
+      this.showSettingsMenu();
     } else if (settings_menu_container?.className == "show") {
-      settings_menu_container.className = "hidden";
+      this.hideSettingsMenu();
     }
+  },
+
+  showSettingsMenu() {
+    const settings_menu_container = document.getElementById(
+      "settings-menu-container",
+    )!;
+    settings_menu_container.className = "show";
+  },
+
+  hideSettingsMenu() {
+    const settings_menu_container = document.getElementById(
+      "settings-menu-container",
+    )!;
+    settings_menu_container.className = "hidden";
   },
 };
 
