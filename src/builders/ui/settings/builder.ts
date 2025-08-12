@@ -4,8 +4,8 @@ import {
   SettingType,
   settings,
 } from "../../../managers/settings/manager";
-import { SettingsLoader } from "../../../managers/settings/loader";
-import { getTranslation } from "../../../utils/translations";
+import { StorageLoader } from "../../../managers/storage/loader";
+import { getTranslation, translationKeys } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 import { getVersion } from "../../../utils/tools";
 
@@ -17,6 +17,7 @@ enum SettingsUI {
             </select>`,
   Number = `<input type="number"> <span class="number-input"></span>`,
   Button = `<input type="button"> <span class="button"></span>`,
+  InputSelect = "",
 }
 
 const SettingsMenuBuilder = {
@@ -24,11 +25,11 @@ const SettingsMenuBuilder = {
     const settings_menu_container = document.getElementById(
       "settings-menu-container",
     )!;
-    const language = SettingsLoader.getValue(Settings.Language);
+    const language = StorageLoader.getValue(Settings.Language);
 
     const title = document.createElement("p");
     title.className = "menu-title text";
-    title.textContent = getTranslation(language, "settings-title");
+    title.textContent = getTranslation(language, translationKeys.settingsTitle);
 
     settings_menu_container.appendChild(title);
 
@@ -36,14 +37,17 @@ const SettingsMenuBuilder = {
     settings_category_container.id = "settings-category-container";
 
     const categories = {
-      [SettingsCategory.General]: getTranslation(language, "settings-general"),
+      [SettingsCategory.General]: getTranslation(
+        language,
+        translationKeys.settingsGeneral,
+      ),
       [SettingsCategory.Appearance]: getTranslation(
         language,
-        "settings-appearance",
+        translationKeys.settingsAppearance,
       ),
       [SettingsCategory.Advanced]: getTranslation(
         language,
-        "settings-advanced",
+        translationKeys.settingsAdvanced,
       ),
     };
 
@@ -53,7 +57,7 @@ const SettingsMenuBuilder = {
     if (settings_footer_container) {
       const version = document.createElement("span");
       version.className = "text";
-      version.textContent = `Version: ${getVersion}`;
+      version.textContent = `${getTranslation(language, translationKeys.version)}: ${getVersion()}`;
       settings_footer_container.appendChild(version);
     }
 
@@ -111,7 +115,7 @@ const SettingsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (SettingsLoader.getValue(Settings.SettingsButtonVisible) == "false") {
+    if (StorageLoader.getValue(Settings.SettingsButtonVisible) == "false") {
       settingsButton.classList.add("hidden");
     }
 

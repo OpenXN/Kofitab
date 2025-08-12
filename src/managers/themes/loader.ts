@@ -73,17 +73,12 @@ const ThemeLoader = {
 
       const themeInfo = (await themeConfig.json()) as Theme;
       // Allowing only: base, colors, animations and extra (extra if you want to add more things).
-      for (const [key, value] of Object.entries(themeInfo.styles ?? {})) {
-        if (!themeParts.includes(key)) {
-          Log.Warn(`Not valid theme part found for: ${key}`); // If the saved name is not the same.
-          continue;
-        }
-
+      for (const [key, value] of Object.entries(themeInfo.parts ?? {})) {
         if (themeParts.length > 0 && !themeParts.includes(key)) {
           continue;
         }
 
-        Log.Debug(`Loading theme ${themeInfo.name} custom style: ${key}`);
+        Log.Debug(`Loading theme ${themeInfo.name} style part: ${key}`);
 
         const link = document.createElement("link");
         link.rel = "stylesheet";
@@ -93,7 +88,6 @@ const ThemeLoader = {
       }
 
       Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);
-      Log.Debug(`Theme custom styles: ${JSON.stringify(themeInfo.styles)}`);
     } else {
       Log.Warn(`Failed to load theme: "${id}". Ignoring this theme`);
     }

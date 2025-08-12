@@ -1,6 +1,7 @@
 import { checkIfNumber } from "../../utils/tools";
 import { defaults } from "../../utils/consts";
-import { SettingsManager, Settings } from "../../managers/settings/manager";
+import { Settings } from "../../managers/settings/manager";
+import { StorageManager } from "../../managers/storage/manager";
 
 const GridsBuilder = {
   createGrids(sizeX: string | number, sizeY: string | number) {
@@ -18,8 +19,8 @@ const GridsBuilder = {
       columns = defaults.GridRows;
       rows = defaults.GridCells;
 
-      SettingsManager.saveValue(Settings.GridRows, String(columns));
-      SettingsManager.saveValue(Settings.GridCells, String(rows));
+      StorageManager.saveValue(Settings.GridRows, String(columns));
+      StorageManager.saveValue(Settings.GridCells, String(rows));
     }
 
     const widgets_overlay = document.getElementById("widgets-overlay");

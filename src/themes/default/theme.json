@@ -4,7 +4,7 @@
   "category": "Theme",
   "author": "BXn4",
   "description": "Default layout design",
-  "styles": {
+  "parts": {
     "base": "base.css",
     "colors": "colors.css",
     "animations": "animations.css"

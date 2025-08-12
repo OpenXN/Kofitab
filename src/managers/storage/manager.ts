@@ -1,3 +1,5 @@
+import { Log } from "../../utils/logger";
+
 enum Settings {
   EnableAnimations = "enableAnimations",
   SettingsButtonVisible = "settingsButtonVisible",
@@ -132,4 +134,11 @@ const settings: Setting[] = [
   },
 ];
 
-export { Settings, settings, SettingsCategory, SettingType };
+const StorageManager = {
+  saveValue(key: Settings, value: string): void {
+    Log.Debug(`Saved value: "${value}" for setting: ${key}`);
+    localStorage.setItem(key, value);
+  },
+};
+
+export { StorageManager, Settings, settings, SettingsCategory, SettingType };

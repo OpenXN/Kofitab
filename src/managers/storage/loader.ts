@@ -1,26 +1,27 @@
 import { Log } from "../../utils/logger";
-import { SettingsManager, Settings, settings } from "./manager";
+import { StorageManager, Settings, settings } from "./manager";
 
-const SettingsLoader = {
+const StorageLoader = {
   getValue(key: Settings): string {
     const storedValue = localStorage.getItem(key);
     if (storedValue !== null && storedValue !== "") {
       return storedValue;
     }
 
-    const defaultValue = settings.find((s) => s.setting === key)!
-      .value as string;
+    const setting = settings.find((s) => s.setting === key);
 
-    if (key !== Settings.CustomTitle) {
+    const defaultValue = setting!.value as string;
+
+    if (setting!.required == true) {
       Log.Warn(
         `Value was not found to setting: ${key}. Using: "${defaultValue}" as defaults`,
       );
 
-      SettingsManager.saveValue(key, defaultValue);
+      StorageManager.saveValue(key, defaultValue);
     }
 
     return defaultValue;
   },
 };
 
-export { SettingsLoader };
+export { StorageLoader };

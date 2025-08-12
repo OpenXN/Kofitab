@@ -1,5 +1,5 @@
 import { Settings } from "../../../managers/settings/manager";
-import { SettingsLoader } from "../../../managers/settings/loader";
+import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 
@@ -10,7 +10,7 @@ const WidgetsMenuBuilder = {
     );
 
     if (widgets_menu_container) {
-      const language = SettingsLoader.getValue(Settings.Language);
+      const language = StorageLoader.getValue(Settings.Language);
 
       const title = document.createElement("p");
       title.className = "menu-title text";
@@ -26,7 +26,9 @@ const WidgetsMenuBuilder = {
     const widgets_menu_button = document.createElement("button");
     widgets_menu_button.id = "widgets-button";
 
-    if (SettingsLoader.getValue(Settings.WidgetsButtonVisible) == "false") {
+    const container = document.getElementById("container")!;
+
+    if (StorageLoader.getValue(Settings.WidgetsButtonVisible) == "false") {
       widgets_menu_button.classList.add("hidden");
     }
 
@@ -40,7 +42,10 @@ const WidgetsMenuBuilder = {
 
     widgets_menu_button.appendChild(icon);
 
-    widgets_menu_button.addEventListener("click", this.handleClick);
+    widgets_menu_button.addEventListener("click", this.handleClick.bind(this));
+
+    // I needed this, sorry. Easier to close the menu. Sorry about miss clicks.
+    container.addEventListener("click", this.hideWidgetsMenu);
 
     document.body.appendChild(widgets_menu_button);
   },
@@ -51,10 +56,24 @@ const WidgetsMenuBuilder = {
     );
 
     if (widgets_menu_container?.className == "hidden") {
-      widgets_menu_container.className = "show";
+      this.showWidgetsMenu();
     } else if (widgets_menu_container?.className == "show") {
-      widgets_menu_container.className = "hidden";
+      this.hideWidgetsMenu();
     }
+  },
+
+  showWidgetsMenu() {
+    const widgets_menu_container = document.getElementById(
+      "widgets-menu-container",
+    )!;
+    widgets_menu_container.className = "show";
+  },
+
+  hideWidgetsMenu() {
+    const widgets_menu_container = document.getElementById(
+      "widgets-menu-container",
+    )!;
+    widgets_menu_container.className = "hidden";
   },
 };
 

@@ -20,8 +20,11 @@
   "gridRows": "Rácssorok",
   "gridCells": "Rácsoszlopok",
   "font": "Betűtípus",
+  "customFont": "Egyedi betűtípus",
 
   "date-format": "yyyy/mm/dd",
+
+  "version": "Verzió",
 
   "author": "BXn4"
 }

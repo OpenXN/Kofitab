@@ -4,8 +4,8 @@ import { ThemeLoader } from "./managers/themes/loader";
 import { TitleLoader } from "./managers/title/loader";
 import { TitleManager } from "./managers/title/manager";
 import { addDebugConsole, Log } from "./utils/logger";
-import { SettingsLoader } from "./managers/settings/loader";
-import { Settings } from "./managers/settings/manager";
+import { StorageLoader } from "./managers/storage/loader";
+import { Settings } from "./managers/storage/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 async function init() {
-  Log.Info(`Kofitab by BXn4. Version: ${getVersion}`);
+  Log.Info(`Kofitab by BXn4. Version: ${getVersion()}`);
   Log.Info("Any issues? -> https://github.com/OpenXN/Kofitab/issues");
   Log.Debug("Loading config...");
 
@@ -24,7 +24,7 @@ async function init() {
   TitleManager.setTitle(TitleLoader.getTitle());
 
   Log.Debug("Setting up wallpaper...");
-  WallpaperManager.setWallpaper(SettingsLoader.getValue(Settings.Wallpaper));
+  WallpaperManager.setWallpaper(StorageLoader.getValue(Settings.Wallpaper));
 
   SettingsMenuBuilder.addSettingsMenu();
   SettingsMenuBuilder.addSettingsMenuButton();
@@ -33,7 +33,7 @@ async function init() {
   WidgetsMenuBuilder.addWidgetsMenuButton();
 
   Log.Debug("Loading styles...");
-  ThemeLoader.loadThemes(SettingsLoader.getValue(Settings.Themes));
+  ThemeLoader.loadThemes(StorageLoader.getValue(Settings.Themes));
 
   // ThemeLoader.listAllThemes();
 
@@ -41,14 +41,14 @@ async function init() {
   FontLoader.injectFontsStyle();
 
   Log.Debug("Loading font...");
-  FontLoader.loadFont(SettingsLoader.getValue(Settings.Font));
+  FontLoader.loadFont(StorageLoader.getValue(Settings.Font));
 
   GridsBuilder.createGrids(
-    Number(SettingsLoader.getValue(Settings.GridRows)),
-    Number(SettingsLoader.getValue(Settings.GridCells)),
+    Number(StorageLoader.getValue(Settings.GridRows)),
+    Number(StorageLoader.getValue(Settings.GridCells)),
   );
 
-  if (SettingsLoader.getValue(Settings.DeveloperMode) == String(true)) {
+  if (StorageLoader.getValue(Settings.DeveloperMode) == String(true)) {
     addDebugConsole();
   }
 }

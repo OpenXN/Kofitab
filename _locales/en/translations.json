@@ -20,8 +20,11 @@
   "gridRows": "Grid rows",
   "gridCells": "Grid cells",
   "font": "Font",
+  "customFont": "Custom font",
 
   "date-format": "mm/dd/yyyy",
+
+  "version": "Version",
 
   "author": "BXn4"
 }
