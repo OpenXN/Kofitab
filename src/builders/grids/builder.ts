@@ -13,13 +13,13 @@ const GridsBuilder = {
       cells < defaults.MinGridCells ||
       cells > defaults.MaxGridCells
     ) {
-      cells = defaults.GridRows;
-      StorageManager.saveValue(Settings.GridRows, String(cells));
+      cells = defaults.GridCells;
+      StorageManager.saveValue(Settings.GridCells, String(cells));
     }
 
     if (!rows || rows < defaults.MinGridRows || rows > defaults.MaxGridRows) {
-      rows = defaults.GridCells;
-      StorageManager.saveValue(Settings.GridCells, String(rows));
+      rows = defaults.GridRows;
+      StorageManager.saveValue(Settings.GridRows, String(rows));
     }
 
     const widgets_overlay = document.getElementById("widgets-overlay");
