@@ -8,17 +8,7 @@ import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation, translationKeys } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 import { getVersion } from "../../../utils/tools";
-
-enum SettingsUI {
-  Toggle = `<input type="checkbox"> <span class="toggle"></span>`,
-  Input = `<input type="text"> <span class="text-input"></span>`,
-  Select = `<select class="select">
-              <option value=""></option>
-            </select>`,
-  Number = `<input type="number"> <span class="number-input"></span>`,
-  Button = `<input type="button"> <span class="button"></span>`,
-  InputSelect = "",
-}
+import { StorageManager } from "../../../managers/storage/manager";
 
 const SettingsMenuBuilder = {
   addSettingsMenu() {
@@ -73,19 +63,89 @@ const SettingsMenuBuilder = {
           if (setting.category === key) {
             const settingElement = document.createElement("div");
             settingElement.className = "settings-item text";
-            settingElement.textContent = getTranslation(
-              language,
-              setting.setting,
-            );
+            settingElement.textContent = getTranslation(language, setting.id);
+
+            let input: HTMLInputElement;
+            let select: HTMLSelectElement;
+            let button: HTMLButtonElement;
 
             switch (setting.type) {
               case SettingType.Toggle:
+                input = document.createElement("input");
+                input.type = "checkbox";
+
+                input.id = `setting-${setting.id}`;
+
+                input.checked = Boolean(setting.value);
+
+                settingElement.appendChild(input);
                 break;
               case SettingType.Input:
+                input = document.createElement("input");
+                input.type = "text";
+
+                input.id = `setting-${setting.id}`;
+
+                if (setting.maxLength) {
+                  input.maxLength = setting.maxLength;
+                }
+
+                input.value = String(setting.value);
+
+                settingElement.appendChild(input);
                 break;
               case SettingType.Select:
+                select = document.createElement("select");
+
+                select.id = `setting-${setting.id}`;
+
+                settingElement.appendChild(select);
                 break;
               case SettingType.Button:
+                button = document.createElement("button");
+
+                button.id = `setting-${setting.id}`;
+
+                settingElement.appendChild(button);
+                break;
+              case SettingType.Number:
+                input = document.createElement("input");
+                input.type = "number";
+
+                input.id = `setting-${setting.id}`;
+
+                input.value = String(setting.value);
+                input.min = String(setting.minValue);
+                input.max = String(setting.maxValue);
+
+                settingElement.appendChild(input);
+
+                input.addEventListener("input", () => {
+                  const value = Number(input.value);
+                  if (value < setting.minValue!)
+                    input.value = String(setting.minValue);
+                  if (value > setting.maxValue!)
+                    input.value = String(setting.maxValue);
+
+                  setting.value = input.value;
+
+                  StorageManager.saveValue(setting.id, setting.value);
+                });
+                break;
+              case SettingType.InputSelect:
+                input = document.createElement("input");
+                input.type = "text";
+
+                input.id = `setting-${setting.id}`;
+
+                input.value = String(setting.value);
+
+                button = document.createElement("button");
+
+                button.id = `setting-${setting.id}`;
+
+                settingElement.appendChild(input);
+                settingElement.appendChild(button);
                 break;
             }
 
@@ -115,7 +175,7 @@ const SettingsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (StorageLoader.getValue(Settings.SettingsButtonVisible) == "false") {
+    if (StorageLoader.getValue(Settings.HideSettingsButton) == String(true)) {
       settingsButton.classList.add("hidden");
     }
 

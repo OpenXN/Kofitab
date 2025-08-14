@@ -1,7 +1,7 @@
 {
   "id": "custom-text",
   "name": "Custom text",
-  "text": "text",
+  "category": "text",
   "author": "BXn4",
   "description": "Type anything!",
   "entry": "index"

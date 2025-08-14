@@ -28,7 +28,7 @@ const WidgetsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (StorageLoader.getValue(Settings.WidgetsButtonVisible) == "false") {
+    if (StorageLoader.getValue(Settings.HideWidgetsButton) == String(true)) {
       widgets_menu_button.classList.add("hidden");
     }
 

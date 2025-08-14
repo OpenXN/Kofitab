@@ -1,7 +1,9 @@
+import { defaults } from "../../utils/consts";
+
 enum Settings {
   EnableAnimations = "enableAnimations",
-  SettingsButtonVisible = "settingsButtonVisible",
-  WidgetsButtonVisible = "widgetsButtonVisible",
+  HideSettingsButton = "hideSettingsButton",
+  HideWidgetsButton = "hideWidgetsButton",
   Wallpaper = "wallpaper",
   WallpaperFit = "wallpaperFit",
   CustomTitle = "customTitle",
@@ -26,108 +28,116 @@ enum SettingType {
   Number = "number",
   Select = "select",
   Button = "button",
-  InputSelect = "input-select", // URL or local path
+  InputSelect = "input-select", // URL or local path. The local needs to be convert to blob.
 }
 
 interface Setting {
-  setting: Settings;
+  id: Settings;
   category: SettingsCategory;
   type: SettingType;
   value: string | boolean | number;
+  minValue?: number;
+  maxValue?: number;
+  maxLength?: number;
   required: boolean;
 }
 
 // I should rename it, not? TODO
 const settings: Setting[] = [
   {
-    setting: Settings.EnableAnimations,
+    id: Settings.EnableAnimations,
     category: SettingsCategory.General,
     type: SettingType.Toggle,
-    value: true,
+    value: defaults.EnableAnimations,
     required: true,
   },
   {
-    setting: Settings.SettingsButtonVisible,
+    id: Settings.HideSettingsButton,
     category: SettingsCategory.General,
     type: SettingType.Toggle,
-    value: true,
+    value: defaults.HideSettingsButton,
     required: true,
   },
   {
-    setting: Settings.WidgetsButtonVisible,
+    id: Settings.HideWidgetsButton,
     category: SettingsCategory.General,
     type: SettingType.Toggle,
-    value: true,
+    value: defaults.HideWidgetsButton,
     required: true,
   },
   {
-    setting: Settings.Wallpaper,
+    id: Settings.Wallpaper,
     category: SettingsCategory.Appearance,
-    type: SettingType.Input,
-    value: "./assets/wallpapers/default.jpeg",
+    type: SettingType.Button, // Wallpapers browser
+    value: defaults.Wallpaper,
     required: true,
   },
   {
-    setting: Settings.WallpaperFit,
+    id: Settings.WallpaperFit,
     category: SettingsCategory.Appearance,
     type: SettingType.Select,
-    value: "cover",
+    value: defaults.WallpaperFit,
     required: true,
   },
   {
-    setting: Settings.CustomTitle,
+    id: Settings.CustomTitle,
     category: SettingsCategory.General,
     type: SettingType.Input,
-    value: "",
+    value: defaults.CustomTitle,
+    maxLength: defaults.MaxTitleLength,
     required: false,
   },
   {
-    setting: Settings.Language,
+    id: Settings.Language,
     category: SettingsCategory.General,
     type: SettingType.Select,
-    value: "en",
+    value: defaults.Language,
     required: true,
   },
   {
-    setting: Settings.DeveloperMode,
+    id: Settings.DeveloperMode,
     category: SettingsCategory.Advanced,
     type: SettingType.Toggle,
-    value: false,
+    value: defaults.DeveloperMode,
     required: true,
   },
   {
-    setting: Settings.Themes,
+    id: Settings.Themes,
     category: SettingsCategory.Appearance,
-    type: SettingType.Button,
-    value: "default[base,colors, animations]$",
+    type: SettingType.Button, // Themes browser
+    value: defaults.Themes,
     required: true,
   },
   {
-    setting: Settings.GridRows,
+    id: Settings.GridRows,
     category: SettingsCategory.Advanced,
     type: SettingType.Number,
-    value: 14,
+    value: defaults.GridRows,
+    minValue: defaults.MinGridRows,
+    maxValue: defaults.MaxGridRows,
     required: true,
   },
   {
-    setting: Settings.GridCells,
+    id: Settings.GridCells,
     category: SettingsCategory.Advanced,
     type: SettingType.Number,
-    value: 7,
+    value: defaults.GridCells,
+    minValue: defaults.MinGridCells,
+    maxValue: defaults.MaxGridCells,
     required: true,
   },
   {
-    setting: Settings.Font,
+    id: Settings.Font,
     category: SettingsCategory.Appearance,
-    type: SettingType.Input,
-    value: "Creato Display",
+    type: SettingType.Select,
+    value: defaults.Font,
     required: true,
   },
   {
-    setting: Settings.CustomFont,
+    id: Settings.CustomFont,
     category: SettingsCategory.Appearance,
     type: SettingType.InputSelect,
-    value: "",
+    value: defaults.CustomFont,
     required: false,
   },
 ];

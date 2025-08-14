@@ -9,8 +9,8 @@
   "settings-advanced": "Haladó",
 
   "enableAnimations": "Animációk engedélyezése",
-  "settingsButtonVisible": "Beállítások gomb elrejtése",
-  "widgetsButtonVisible": "Widget gomb elrejtése",
+  "hideSettingsButton": "Beállítások gomb elrejtése",
+  "hideWidgetsButton": "Widget gomb elrejtése",
   "wallpaper": "Háttérkép",
   "wallpaperFit": "Háttérkép igazítása",
   "customTitle": "Egyedi cím",

@@ -1,14 +1,16 @@
 import { Log } from "../../utils/logger";
-import { StorageManager, Settings, settings } from "./manager";
+import { Settings, settings } from "../settings/manager";
+import { StorageManager } from "./manager";
 
 const StorageLoader = {
   getValue(key: Settings): string {
+    const setting = settings.find((s) => s.id === key);
     const storedValue = localStorage.getItem(key);
+
     if (storedValue !== null && storedValue !== "") {
+      setting!.value = storedValue;
       return storedValue;
     }
-
-    const setting = settings.find((s) => s.setting === key);
 
     const defaultValue = setting!.value as string;
 

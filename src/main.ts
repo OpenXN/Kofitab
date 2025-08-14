@@ -5,7 +5,7 @@ import { TitleLoader } from "./managers/title/loader";
 import { TitleManager } from "./managers/title/manager";
 import { addDebugConsole, Log } from "./utils/logger";
 import { StorageLoader } from "./managers/storage/loader";
-import { Settings } from "./managers/storage/manager";
+import { Settings } from "./managers/settings/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
@@ -26,12 +26,6 @@ async function init() {
   Log.Debug("Setting up wallpaper...");
   WallpaperManager.setWallpaper(StorageLoader.getValue(Settings.Wallpaper));
 
-  SettingsMenuBuilder.addSettingsMenu();
-  SettingsMenuBuilder.addSettingsMenuButton();
-
-  WidgetsMenuBuilder.addWidgetsMenu();
-  WidgetsMenuBuilder.addWidgetsMenuButton();
-
   Log.Debug("Loading styles...");
   ThemeLoader.loadThemes(StorageLoader.getValue(Settings.Themes));
 
@@ -47,6 +41,12 @@ async function init() {
     Number(StorageLoader.getValue(Settings.GridRows)),
     Number(StorageLoader.getValue(Settings.GridCells)),
   );
+
+  SettingsMenuBuilder.addSettingsMenu();
+  SettingsMenuBuilder.addSettingsMenuButton();
+
+  WidgetsMenuBuilder.addWidgetsMenu();
+  WidgetsMenuBuilder.addWidgetsMenuButton();
 
   if (StorageLoader.getValue(Settings.DeveloperMode) == String(true)) {
     addDebugConsole();
