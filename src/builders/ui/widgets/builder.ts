@@ -1,4 +1,4 @@
-import { Settings } from "../../../managers/settings/manager";
+import { Settings, SettingsManager } from "../../../managers/settings/manager";
 import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
@@ -7,19 +7,18 @@ const WidgetsMenuBuilder = {
   addWidgetsMenu() {
     const widgets_menu_container = document.getElementById(
       "widgets-menu-container",
-    );
+    )!;
 
-    if (widgets_menu_container) {
-      const language = StorageLoader.getValue(Settings.Language);
+    const language = SettingsManager.getSetting(Settings.Language)
+      .value as string;
 
-      const title = document.createElement("p");
-      title.className = "menu-title text";
-      title.textContent = getTranslation(language, "widgets-title");
+    const title = document.createElement("p");
+    title.className = "menu-title text";
+    title.textContent = getTranslation(language, "widgets-title");
 
-      widgets_menu_container.appendChild(title);
+    widgets_menu_container.appendChild(title);
 
-      document.body.appendChild(widgets_menu_container);
-    }
+    document.body.appendChild(widgets_menu_container);
   },
 
   addWidgetsMenuButton() {

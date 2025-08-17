@@ -1,15 +1,32 @@
 import { Log } from "../../utils/logger";
-import { Settings, settings } from "../settings/manager";
+import { Settings, settings, SettingType } from "../settings/manager";
 import { StorageManager } from "./manager";
 
 const StorageLoader = {
-  getValue(key: Settings): string {
+  getValue(key: Settings) {
     const setting = settings.find((s) => s.id === key);
     const storedValue = localStorage.getItem(key);
 
     if (storedValue !== null && storedValue !== "") {
-      setting!.value = storedValue;
-      return storedValue;
+      switch (setting!.type) {
+        case SettingType.Toggle:
+          setting!.value = storedValue === "true";
+          break;
+
+        case SettingType.Input:
+          setting!.value = String(storedValue);
+          break;
+
+        default:
+          setting!.value = storedValue;
+          break;
+      }
+
+      Log.Debug(
+        `Using value from storage: ${storedValue} to setting: ${setting!.id}`,
+      );
+
+      return setting!.value;
     }
 
     const defaultValue = setting!.value as string;

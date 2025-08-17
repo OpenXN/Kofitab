@@ -22,15 +22,14 @@ const GridsBuilder = {
       StorageManager.saveValue(Settings.GridRows, String(rows));
     }
 
-    const widgets_overlay = document.getElementById("widgets-overlay");
-    if (!widgets_overlay) return;
+    const widgets_overlay = document.getElementById("widgets-overlay")!;
 
     widgets_overlay.style.gridTemplateColumns = `repeat(${sizeX}, 1fr)`;
     widgets_overlay.style.gridTemplateRows = `repeat(${sizeY}, 1fr)`;
 
     for (let i = 0; i < cells * rows; i++) {
       const widget_area = document.createElement("div");
-      widget_area.className = "widget-area";
+      widget_area.className = "widget-area visible";
       widget_area.id = `widget-area-${i}`;
       widgets_overlay.appendChild(widget_area);
     }

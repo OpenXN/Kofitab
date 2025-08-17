@@ -5,7 +5,11 @@ import { TitleLoader } from "./managers/title/loader";
 import { TitleManager } from "./managers/title/manager";
 import { addDebugConsole, Log } from "./utils/logger";
 import { StorageLoader } from "./managers/storage/loader";
-import { Settings } from "./managers/settings/manager";
+import {
+  Settings,
+  settings,
+  SettingsManager,
+} from "./managers/settings/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
@@ -20,14 +24,24 @@ async function init() {
   Log.Info("Any issues? -> https://github.com/OpenXN/Kofitab/issues");
   Log.Debug("Loading config...");
 
+  settings.forEach((setting) => {
+    setting.value = StorageLoader.getValue(setting.id);
+
+    // Log.Debug(`VALUE iS SET TO: ${setting.value} FOR: ${setting.id} `);
+  });
+
   Log.Debug("Setting up tab title...");
   TitleManager.setTitle(TitleLoader.getTitle());
 
   Log.Debug("Setting up wallpaper...");
-  WallpaperManager.setWallpaper(StorageLoader.getValue(Settings.Wallpaper));
+  WallpaperManager.setWallpaper(
+    SettingsManager.getSetting(Settings.Wallpaper).value as string,
+  ); // will be updated to support custom wallpapers, and going to add wallpaper browser.
 
   Log.Debug("Loading styles...");
-  ThemeLoader.loadThemes(StorageLoader.getValue(Settings.Themes));
+  ThemeLoader.loadThemes(
+    SettingsManager.getSetting(Settings.Themes).value as string,
+  );
 
   // ThemeLoader.listAllThemes();
 
@@ -35,11 +49,13 @@ async function init() {
   FontLoader.injectFontsStyle();
 
   Log.Debug("Loading font...");
-  FontLoader.loadFont(StorageLoader.getValue(Settings.Font));
+  FontLoader.loadFont(
+    SettingsManager.getSetting(Settings.Font).value as string,
+  );
 
   GridsBuilder.createGrids(
-    Number(StorageLoader.getValue(Settings.GridRows)),
-    Number(StorageLoader.getValue(Settings.GridCells)),
+    Number(SettingsManager.getSetting(Settings.GridRows).value as number),
+    Number(SettingsManager.getSetting(Settings.GridCells).value as number),
   );
 
   SettingsMenuBuilder.addSettingsMenu();
@@ -48,7 +64,10 @@ async function init() {
   WidgetsMenuBuilder.addWidgetsMenu();
   WidgetsMenuBuilder.addWidgetsMenuButton();
 
-  if (StorageLoader.getValue(Settings.DeveloperMode) == String(true)) {
+  if (
+    (SettingsManager.getSetting(Settings.DeveloperMode).value as boolean) ==
+    true
+  ) {
     addDebugConsole();
   }
 }

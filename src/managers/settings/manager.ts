@@ -1,10 +1,17 @@
 import { defaults } from "../../utils/consts";
 
+const SettingsManager = {
+  getSetting(key: Settings): Setting {
+    const setting = settings.find((s) => s.id === key)!;
+    return setting;
+  },
+};
+
 enum Settings {
   EnableAnimations = "enableAnimations",
   HideSettingsButton = "hideSettingsButton",
   HideWidgetsButton = "hideWidgetsButton",
-  Wallpaper = "wallpaper",
+  Wallpaper = "wallpaper", // The wallpaper NEEDS!!! to be converted to blob if its remote to load it faster, and save it, because the source can be anytime down, or the connection slow.
   WallpaperFit = "wallpaperFit",
   CustomTitle = "customTitle",
   Language = "language",
@@ -142,4 +149,4 @@ const settings: Setting[] = [
   },
 ];
 
-export { Settings, settings, SettingsCategory, SettingType };
+export { Settings, settings, SettingsCategory, SettingType, SettingsManager };
