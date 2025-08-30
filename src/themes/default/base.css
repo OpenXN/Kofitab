@@ -176,14 +176,63 @@ body {
     margin: 30px;
 }
 
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+.switch input,
 .settings-type-toggle {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 18px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    border-radius: 50%;
+}
+
+.switch input:checked + .slider:before,
+.settings-type-toggle:checked + .slider:before {
+    transform: translateX(26px);
 }
 
 .settings-type-input {
+    margin-left: 12px;
+    max-width: 190px;
+    border: 0px solid;
+    border-radius: 8px;
+    padding: 10px;
+    outline: none;
+    font-size: 12px;
 }
 
 .settings-type-select {
 }
 
 .settings-type-button {
+}
+
+.settings-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }

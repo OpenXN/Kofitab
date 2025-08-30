@@ -1,3 +1,5 @@
+import { Log } from "../../utils/logger";
+
 interface Theme {
   id?: string;
   name?: string;
@@ -9,4 +11,32 @@ interface Theme {
   path?: string; // Using external themes are allowed!
 }
 
-export { Theme };
+const ThemeManager = {
+  /**
+   * Unloads a specified theme, and removes it from the DOM, and from the enabled themes from the localStorage. (TODO)
+   */
+  unloadTheme(id: string) {
+    const style = document.getElementById(id);
+    if (style?.parentNode) {
+      style.parentNode.removeChild(style);
+      Log.Debug(`Unloaded theme: ${id}`);
+    }
+  },
+
+  /**
+   * Just removes the theme / style from the DOM.
+   */
+  removeFromDOM(id: string) {
+    const style = document.getElementById(id);
+    if (style?.parentNode) {
+      style.parentNode.removeChild(style);
+      Log.Debug(`Unloaded theme/style: ${id}`);
+    } else {
+      Log.Warn(
+        `Cannot unload theme/style from DOM, because: '${id}' was not found.`,
+      );
+    }
+  },
+};
+
+export { Theme, ThemeManager };

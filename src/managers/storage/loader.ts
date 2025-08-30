@@ -3,43 +3,41 @@ import { Settings, settings, SettingType } from "../settings/manager";
 import { StorageManager } from "./manager";
 
 const StorageLoader = {
-  getValue(key: Settings) {
-    const setting = settings.find((s) => s.id === key);
-    const storedValue = localStorage.getItem(key);
+  getValue(key: Settings): string | number | boolean {
+    const setting = settings.find((s) => s.id === key)!;
 
-    if (storedValue !== null && storedValue !== "") {
-      switch (setting!.type) {
-        case SettingType.Toggle:
-          setting!.value = storedValue === "true";
-          break;
+    let value = localStorage.getItem(key);
 
-        case SettingType.Input:
-          setting!.value = String(storedValue);
-          break;
+    if (value == null || value === "") {
+      // Its always sets to default value,
+      // and if the config exist in localStorage, its updates it.
+      value = String(setting.value);
 
-        default:
-          setting!.value = storedValue;
-          break;
+      if (setting.required === true) {
+        Log.Warn(
+          `Value was not found for setting: ${key}. Using: "${value}" as defaults`,
+        );
+
+        StorageManager.saveValue(key, value);
       }
-
-      Log.Debug(
-        `Using value from storage: ${storedValue} to setting: ${setting!.id}`,
-      );
-
-      return setting!.value;
     }
 
-    const defaultValue = setting!.value as string;
-
-    if (setting!.required == true) {
-      Log.Warn(
-        `Value was not found to setting: ${key}. Using: "${defaultValue}" as defaults`,
-      );
-
-      StorageManager.saveValue(key, defaultValue);
+    switch (setting.type) {
+      case SettingType.Toggle:
+        setting.value = value === "true";
+        break;
+      case SettingType.Input:
+        setting.value = value;
+        break;
+      case SettingType.Number:
+        setting.value = Number(value);
+        break;
+      default:
+        setting.value = value;
+        break;
     }
 
-    return defaultValue;
+    return setting.value;
   },
 };
 

@@ -3,3 +3,6 @@
 /dist
 /package-lock.json
 TODO
+README.md
+dist.crx
+dist.pem

@@ -1,5 +1,4 @@
 import { Settings, SettingsManager } from "../../../managers/settings/manager";
-import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 
@@ -27,7 +26,7 @@ const WidgetsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (StorageLoader.getValue(Settings.HideWidgetsButton) == String(true)) {
+    if (SettingsManager.getSetting(Settings.HideWidgetsButton).value == true) {
       widgets_menu_button.classList.add("hidden");
     }
 

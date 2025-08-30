@@ -7,6 +7,10 @@ const SettingsManager = {
   },
 };
 
+enum ButtonTitles {
+  Themes = "theme-browser",
+}
+
 enum Settings {
   EnableAnimations = "enableAnimations",
   HideSettingsButton = "hideSettingsButton",
@@ -40,12 +44,14 @@ enum SettingType {
 
 interface Setting {
   id: Settings;
-  category: SettingsCategory;
-  type: SettingType;
-  value: string | boolean | number;
+  category?: SettingsCategory;
+  type?: SettingType;
+  value?: string | boolean | number;
   minValue?: number;
   maxValue?: number;
   maxLength?: number;
+  needPlaceHolder?: boolean;
+  buttonTitle?: string;
   required: boolean;
 }
 
@@ -56,6 +62,7 @@ const settings: Setting[] = [
     category: SettingsCategory.General,
     type: SettingType.Toggle,
     value: defaults.EnableAnimations,
+
     required: true,
   },
   {
@@ -63,6 +70,7 @@ const settings: Setting[] = [
     category: SettingsCategory.General,
     type: SettingType.Toggle,
     value: defaults.HideSettingsButton,
+
     required: true,
   },
   {
@@ -70,6 +78,7 @@ const settings: Setting[] = [
     category: SettingsCategory.General,
     type: SettingType.Toggle,
     value: defaults.HideWidgetsButton,
+
     required: true,
   },
   {
@@ -77,6 +86,7 @@ const settings: Setting[] = [
     category: SettingsCategory.Appearance,
     type: SettingType.Button, // Wallpapers browser
     value: defaults.Wallpaper,
+
     required: true,
   },
   {
@@ -84,6 +94,7 @@ const settings: Setting[] = [
     category: SettingsCategory.Appearance,
     type: SettingType.Select,
     value: defaults.WallpaperFit,
+
     required: true,
   },
   {
@@ -92,6 +103,8 @@ const settings: Setting[] = [
     type: SettingType.Input,
     value: defaults.CustomTitle,
     maxLength: defaults.MaxTitleLength,
+    needPlaceHolder: true,
+
     required: false,
   },
   {
@@ -99,6 +112,7 @@ const settings: Setting[] = [
     category: SettingsCategory.General,
     type: SettingType.Select,
     value: defaults.Language,
+
     required: true,
   },
   {
@@ -106,13 +120,17 @@ const settings: Setting[] = [
     category: SettingsCategory.Advanced,
     type: SettingType.Toggle,
     value: defaults.DeveloperMode,
+
     required: true,
   },
   {
     id: Settings.Themes,
     category: SettingsCategory.Appearance,
-    type: SettingType.Button, // Themes browser
+    type: SettingType.Button,
+    buttonTitle: ButtonTitles.Themes,
+
     value: defaults.Themes,
+
     required: true,
   },
   {
@@ -122,6 +140,7 @@ const settings: Setting[] = [
     value: defaults.GridRows,
     minValue: defaults.MinGridRows,
     maxValue: defaults.MaxGridRows,
+
     required: true,
   },
   {
@@ -131,6 +150,7 @@ const settings: Setting[] = [
     value: defaults.GridCells,
     minValue: defaults.MinGridCells,
     maxValue: defaults.MaxGridCells,
+
     required: true,
   },
   {
@@ -138,6 +158,7 @@ const settings: Setting[] = [
     category: SettingsCategory.Appearance,
     type: SettingType.Select,
     value: defaults.Font,
+
     required: true,
   },
   {
@@ -145,8 +166,16 @@ const settings: Setting[] = [
     category: SettingsCategory.Appearance,
     type: SettingType.InputSelect,
     value: defaults.CustomFont,
+
     required: false,
   },
 ];
 
-export { Settings, settings, SettingsCategory, SettingType, SettingsManager };
+export {
+  Settings,
+  settings,
+  SettingsCategory,
+  SettingType,
+  SettingsManager,
+  Setting,
+};

@@ -40,7 +40,7 @@ function addDebugConsole() {
   const debugConsole = document.createElement("div");
   debugConsole.id = "debug-console";
 
-  document.body.append(debugConsole);
+  // document.body.append(debugConsole);
 }
 
 export { Log, addDebugConsole };

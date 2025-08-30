@@ -44,7 +44,6 @@
     "webpack-cli": "5.1.4"
   },
   "dependencies": {
-    "bun": "^1.2.20",
     "node-fetch": "^3.3.2"
   }
 }

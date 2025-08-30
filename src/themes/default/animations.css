@@ -18,3 +18,9 @@
         transform: scale(1);
     }
 }
+
+.slider:before {
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}

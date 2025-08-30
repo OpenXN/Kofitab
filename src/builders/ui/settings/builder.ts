@@ -5,12 +5,14 @@ import {
   settings,
   SettingsManager,
 } from "../../../managers/settings/manager";
-import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation, translationKeys } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 import { getVersion } from "../../../utils/tools";
 import { StorageManager } from "../../../managers/storage/manager";
-import { Log } from "../../../utils/logger";
+import { defaults } from "../../../utils/consts";
+import { StorageLoader } from "../../../managers/storage/loader";
+import { ThemeManager } from "../../../managers/themes/manager";
+import { ThemeLoader } from "../../../managers/themes/loader";
 
 const SettingsMenuBuilder = {
   addSettingsMenu() {
@@ -60,39 +62,103 @@ const SettingsMenuBuilder = {
       settings_container.className = "settings-container";
 
       settings.forEach((setting) => {
+        const settings_input_container = document.createElement("div");
+        settings_input_container.className = "settings-input-container";
+
         if (setting.category === key) {
-          const settingElement = document.createElement("div");
-          settingElement.className = "settings-item text";
-          settingElement.textContent = getTranslation(language, setting.id);
+          const setting_item = document.createElement("div");
+          setting_item.className = "settings-item text";
+          setting_item.textContent = getTranslation(language, setting.id);
+
+          // let setting_input_area: HTMLDivElement;
 
           let input: HTMLInputElement;
           let select: HTMLSelectElement;
           let button: HTMLButtonElement;
 
+          let label: HTMLLabelElement;
+          let slider: HTMLSpanElement;
+
           switch (setting.type) {
             case SettingType.Toggle:
+              label = document.createElement("label");
+              label.className = "switch";
+
               input = document.createElement("input");
               input.type = "checkbox";
-
-              input.id = `setting-${setting.id}`;
-
-              Log.Debug(`VALUE: ${setting.value} FOR: ${setting.id} `);
-
+              input.className = "settings-type-toggle";
+              input.id = `settings-${setting.id}`;
               input.checked = Boolean(setting.value);
 
-              settingElement.appendChild(input);
+              slider = document.createElement("span");
+              slider.className = "slider round";
+              label.appendChild(input);
+              label.appendChild(slider);
 
               input.addEventListener("change", () => {
                 setting.value = input.checked;
 
                 StorageManager.saveValue(setting.id, String(setting.value));
+
+                // UGLY EWW! Maybe I can make some listeners.
+                switch (setting.id) {
+                  case Settings.EnableAnimations: {
+                    const idList = (
+                      StorageLoader.getValue(Settings.Themes) as string
+                    )
+                      .split("$")
+                      .map((id) => id.trim())
+                      .filter((id) => id.length > 0);
+
+                    for (const id of idList) {
+                      let themeParts: string[] = [];
+                      const themeID = id.split("[")[0];
+
+                      if (id.includes("[")) {
+                        const themePart = id.split("[")[1].replace("]", "");
+                        themeParts = themePart.split(",").map((s) => s.trim());
+
+                        // Log.Debug(JSON.stringify(themeParts));
+
+                        if (
+                          StorageLoader.getValue(Settings.EnableAnimations) ==
+                            Boolean(false) &&
+                          themeParts.includes("animations")
+                        ) {
+                          ThemeManager.removeFromDOM(`${themeID}-animations`);
+                        }
+
+                        if (
+                          StorageLoader.getValue(Settings.EnableAnimations) ==
+                            Boolean(true) &&
+                          themeParts.includes("animations")
+                        ) {
+                          ThemeLoader.loadTheme(themeID, ["animations"]);
+                        }
+                      }
+                    }
+                    break;
+                  }
+                }
               });
+
+              settings_input_container.appendChild(label);
+
+              setting_item.appendChild(settings_input_container);
               break;
             case SettingType.Input:
               input = document.createElement("input");
               input.type = "text";
 
-              input.id = `setting-${setting.id}`;
+              input.className = "settings-type-input";
+              input.id = `settings-${setting.id}`;
+
+              if (setting.needPlaceHolder) {
+                input.placeholder = getTranslation(
+                  language,
+                  `${setting.id}PlaceHolder`,
+                );
+              }
 
               if (setting.maxLength) {
                 input.maxLength = setting.maxLength;
@@ -100,33 +166,49 @@ const SettingsMenuBuilder = {
 
               input.value = String(setting.value);
 
-              settingElement.appendChild(input);
+              setting_item.appendChild(input);
+
+              input.addEventListener("input", () => {
+                const value = input.value;
+                if (value.length < defaults.MaxTitleLength) {
+                  setting.value = input.value;
+
+                  StorageManager.saveValue(setting.id, setting.value);
+                }
+              });
               break;
             case SettingType.Select:
               select = document.createElement("select");
 
-              select.id = `setting-${setting.id}`;
+              select.id = `settings-${setting.id}`;
 
-              settingElement.appendChild(select);
+              setting_item.appendChild(select);
               break;
             case SettingType.Button:
               button = document.createElement("button");
 
-              button.id = `setting-${setting.id}`;
+              button.id = `settings-${setting.id}`;
 
-              settingElement.appendChild(button);
+              if (setting.buttonTitle != undefined) {
+                button.textContent = getTranslation(
+                  language,
+                  setting.buttonTitle,
+                );
+              }
+
+              setting_item.appendChild(button);
               break;
             case SettingType.Number:
               input = document.createElement("input");
               input.type = "number";
 
-              input.id = `setting-${setting.id}`;
+              input.id = `settings-${setting.id}`;
 
               input.value = String(setting.value);
               input.min = String(setting.minValue);
               input.max = String(setting.maxValue);
 
-              settingElement.appendChild(input);
+              setting_item.appendChild(input);
 
               input.addEventListener("input", () => {
                 const value = Number(input.value);
@@ -144,20 +226,27 @@ const SettingsMenuBuilder = {
               input = document.createElement("input");
               input.type = "text";
 
-              input.id = `setting-${setting.id}`;
+              input.id = `settings-${setting.id}`;
+              input.className = "settings-type-input";
+              if (setting.needPlaceHolder) {
+                input.placeholder = getTranslation(
+                  language,
+                  `${setting.id}PlaceHolder`,
+                );
+              }
 
               input.value = String(setting.value);
 
               button = document.createElement("button");
 
-              button.id = `setting-${setting.id}`;
+              button.id = `settings-${setting.id}`;
 
-              settingElement.appendChild(input);
-              settingElement.appendChild(button);
+              setting_item.appendChild(input);
+              setting_item.appendChild(button);
               break;
           }
 
-          settings_container.appendChild(settingElement);
+          settings_container.appendChild(setting_item);
         }
       });
 
@@ -182,7 +271,7 @@ const SettingsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (StorageLoader.getValue(Settings.HideSettingsButton) == String(true)) {
+    if (SettingsManager.getSetting(Settings.HideSettingsButton).value == true) {
       settingsButton.classList.add("hidden");
     }
 

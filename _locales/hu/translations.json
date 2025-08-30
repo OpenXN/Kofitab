@@ -8,6 +8,8 @@
   "settings-appearance": "Megjelenés",
   "settings-advanced": "Haladó",
 
+  "theme-browser": "Témák böngészése",
+
   "enableAnimations": "Animációk engedélyezése",
   "hideSettingsButton": "Beállítások gomb elrejtése",
   "hideWidgetsButton": "Widget gomb elrejtése",
@@ -21,6 +23,8 @@
   "gridCells": "Rácsoszlopok",
   "font": "Betűtípus",
   "customFont": "Egyedi betűtípus",
+
+  "customTitlePlaceHolder": "Új lap",
 
   "date-format": "yyyy/mm/dd",
 

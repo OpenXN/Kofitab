@@ -31,6 +31,8 @@ const translationKeys = {
   settingsAppearance: "settings-appearance",
   settingsAdvanced: "settings-advanced",
 
+  themeBrowser: "theme-browser",
+
   enableAnimations: "enableAnimations",
   settingsButtonVisible: "settingsButtonVisible",
   widgetsButtonVisible: "widgetsButtonVisible",

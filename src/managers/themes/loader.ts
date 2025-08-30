@@ -2,6 +2,8 @@ import { Log } from "../../utils/logger";
 import { Theme } from "./manager";
 
 import themes from "../../themes/themes.json";
+import { StorageLoader } from "../storage/loader";
+import { Settings } from "../settings/manager";
 
 /**
  * ThemeLoader is responsible for loading custom themes:
@@ -34,7 +36,7 @@ const ThemeLoader = {
       .filter((id) => id.length > 0);
 
     for (const id of idList) {
-      let themeParts: string[] = []; // TODO: RENAME THEME STYLES TO THEME parts
+      let themeParts: string[] = [];
       const themeID = id.split("[")[0];
 
       if (id.includes("[")) {
@@ -58,6 +60,8 @@ const ThemeLoader = {
    * If you want to load a remote theme, you need a valid theme config file, which points to an custom CSS. (TODO)
    * If the remote theme config file is invalid, it will ignores that theme. (TODO)
    */
+
+  // Its getting worse.
   async loadTheme(id: string, themeParts: string[]) {
     // TODO: LOAD REMOTE THEMES
     //
@@ -78,6 +82,13 @@ const ThemeLoader = {
           continue;
         }
 
+        if (
+          key == "animations" &&
+          StorageLoader.getValue(Settings.EnableAnimations) == Boolean(false)
+        ) {
+          return;
+        }
+
         Log.Debug(`Loading theme ${themeInfo.name} style part: ${key}`);
 
         const link = document.createElement("link");
@@ -90,17 +101,6 @@ const ThemeLoader = {
       Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);
     } else {
       Log.Warn(`Failed to load theme: "${id}". Ignoring this theme`);
-    }
-  },
-
-  /**
-   * Unloads a specified theme, and removes it from the DOM, and from the enabled themes from the localStorage. (TODO)
-   */
-  unloadTheme(id: string) {
-    const style = document.getElementById(id);
-    if (style?.parentNode) {
-      style.parentNode.removeChild(style);
-      Log.Debug(`Unloaded theme/style: ${id}`);
     }
   },
 };

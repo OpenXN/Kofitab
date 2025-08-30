@@ -8,6 +8,8 @@
   "settings-appearance": "Appearance",
   "settings-advanced": "Advanced",
 
+  "theme-browser": "Browse themes",
+
   "enableAnimations": "Enable animations",
   "hideSettingsButton": "Hide settings button",
   "hideWidgetsButton": "Hide widgets button",
@@ -21,6 +23,8 @@
   "gridCells": "Grid cells",
   "font": "Font",
   "customFont": "Custom font",
+
+  "customTitlePlaceHolder": "New tab",
 
   "date-format": "mm/dd/yyyy",
 

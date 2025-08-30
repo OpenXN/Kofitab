@@ -29,7 +29,7 @@ const GridsBuilder = {
 
     for (let i = 0; i < cells * rows; i++) {
       const widget_area = document.createElement("div");
-      widget_area.className = "widget-area visible";
+      widget_area.className = "widget-area";
       widget_area.id = `widget-area-${i}`;
       widgets_overlay.appendChild(widget_area);
     }
