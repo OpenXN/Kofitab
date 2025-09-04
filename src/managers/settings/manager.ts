@@ -1,12 +1,5 @@
 import { defaults } from "../../utils/consts";
 
-const SettingsManager = {
-  getSetting(key: Settings): Setting {
-    const setting = settings.find((s) => s.id === key)!;
-    return setting;
-  },
-};
-
 enum ButtonTitles {
   Themes = "theme-browser",
 }
@@ -171,11 +164,4 @@ const settings: Setting[] = [
   },
 ];
 
-export {
-  Settings,
-  settings,
-  SettingsCategory,
-  SettingType,
-  SettingsManager,
-  Setting,
-};
+export { Settings, settings, SettingsCategory, SettingType, Setting };

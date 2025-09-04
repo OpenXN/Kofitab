@@ -1,4 +1,5 @@
-import { Settings, SettingsManager } from "../settings/manager";
+import { Settings } from "../settings/manager";
+import { StorageLoader } from "../storage/loader";
 import { getTranslation } from "../../utils/translations";
 import { defaults } from "../../utils/consts";
 
@@ -10,16 +11,15 @@ const TitleLoader = {
    * Returns custom title if exist, else language default.
    */
   getTitle() {
-    const setting = SettingsManager.getSetting(Settings.CustomTitle);
-    if (setting.value !== null && setting.value !== "") {
+    const customTitle = StorageLoader.getValue(Settings.CustomTitle) as string;
+    if (customTitle !== null && customTitle !== "") {
       // im not going to allow long titles.
-      if (String(setting.value).length < defaults.MaxTitleLength) {
-        return setting.value as string;
+      if (customTitle.length < defaults.MaxTitleLength) {
+        return customTitle;
       }
     }
 
-    const language = SettingsManager.getSetting(Settings.Language)
-      .value as string;
+    const language = StorageLoader.getValue(Settings.Language) as string;
     return getTranslation(language, "new-tab");
   },
 };

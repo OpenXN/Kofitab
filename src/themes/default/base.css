@@ -225,6 +225,23 @@ body {
     font-size: 12px;
 }
 
+.settings-type-input-container {
+    position: relative;
+    display: inline-block;
+}
+
+.settings-input-max-length {
+    position: absolute;
+    right: 10px;
+    top: 10%;
+    pointer-events: none;
+    font-size: 8px;
+}
+
+.settings-type-input:focus + .settings-input-max-length {
+    font-size: 12px;
+}
+
 .settings-type-select {
 }
 

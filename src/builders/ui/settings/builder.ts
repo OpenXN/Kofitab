@@ -3,24 +3,21 @@ import {
   SettingsCategory,
   SettingType,
   settings,
-  SettingsManager,
 } from "../../../managers/settings/manager";
+import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation, translationKeys } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 import { getVersion } from "../../../utils/tools";
 import { StorageManager } from "../../../managers/storage/manager";
-import { defaults } from "../../../utils/consts";
-import { StorageLoader } from "../../../managers/storage/loader";
-import { ThemeManager } from "../../../managers/themes/manager";
-import { ThemeLoader } from "../../../managers/themes/loader";
+
+import { SettingsChangeListener } from "../../../listeners/settings/listener";
 
 const SettingsMenuBuilder = {
   addSettingsMenu() {
     const settings_menu_container = document.getElementById(
       "settings-menu-container",
     )!;
-    const language = SettingsManager.getSetting(Settings.Language)
-      .value as string;
+    const language = StorageLoader.getValue(Settings.Language) as string;
 
     const title = document.createElement("p");
     title.className = "menu-title text";
@@ -79,6 +76,8 @@ const SettingsMenuBuilder = {
           let label: HTMLLabelElement;
           let slider: HTMLSpanElement;
 
+          let container: HTMLDivElement;
+
           switch (setting.type) {
             case SettingType.Toggle:
               label = document.createElement("label");
@@ -96,50 +95,7 @@ const SettingsMenuBuilder = {
               label.appendChild(slider);
 
               input.addEventListener("change", () => {
-                setting.value = input.checked;
-
-                StorageManager.saveValue(setting.id, String(setting.value));
-
-                // UGLY EWW! Maybe I can make some listeners.
-                switch (setting.id) {
-                  case Settings.EnableAnimations: {
-                    const idList = (
-                      StorageLoader.getValue(Settings.Themes) as string
-                    )
-                      .split("$")
-                      .map((id) => id.trim())
-                      .filter((id) => id.length > 0);
-
-                    for (const id of idList) {
-                      let themeParts: string[] = [];
-                      const themeID = id.split("[")[0];
-
-                      if (id.includes("[")) {
-                        const themePart = id.split("[")[1].replace("]", "");
-                        themeParts = themePart.split(",").map((s) => s.trim());
-
-                        // Log.Debug(JSON.stringify(themeParts));
-
-                        if (
-                          StorageLoader.getValue(Settings.EnableAnimations) ==
-                            Boolean(false) &&
-                          themeParts.includes("animations")
-                        ) {
-                          ThemeManager.removeFromDOM(`${themeID}-animations`);
-                        }
-
-                        if (
-                          StorageLoader.getValue(Settings.EnableAnimations) ==
-                            Boolean(true) &&
-                          themeParts.includes("animations")
-                        ) {
-                          ThemeLoader.loadTheme(themeID, ["animations"]);
-                        }
-                      }
-                    }
-                    break;
-                  }
-                }
+                SettingsChangeListener.onValueChanged(setting);
               });
 
               settings_input_container.appendChild(label);
@@ -160,22 +116,35 @@ const SettingsMenuBuilder = {
                 );
               }
 
-              if (setting.maxLength) {
-                input.maxLength = setting.maxLength;
-              }
+              container = document.createElement("div");
+
+              container.className = "settings-type-input-container";
 
               input.value = String(setting.value);
 
-              setting_item.appendChild(input);
+              container.appendChild(input);
+
+              if (setting.maxLength) {
+                input.maxLength = setting.maxLength;
+
+                const settings_input_max_length =
+                  document.createElement("span");
+                settings_input_max_length.className =
+                  "settings-input-max-length";
+                settings_input_max_length.id = `settings-${setting.id}-max-length`;
+                settings_input_max_length.textContent = String(
+                  setting.maxLength - String(setting.value).length,
+                );
+
+                container.appendChild(settings_input_max_length);
+              }
+
+              setting_item.appendChild(container);
 
               input.addEventListener("input", () => {
-                const value = input.value;
-                if (value.length < defaults.MaxTitleLength) {
-                  setting.value = input.value;
-
-                  StorageManager.saveValue(setting.id, setting.value);
-                }
+                SettingsChangeListener.onValueChanged(setting);
               });
+
               break;
             case SettingType.Select:
               select = document.createElement("select");
@@ -271,7 +240,7 @@ const SettingsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (SettingsManager.getSetting(Settings.HideSettingsButton).value == true) {
+    if (StorageLoader.getValue(Settings.HideSettingsButton) == Boolean(true)) {
       settingsButton.classList.add("hidden");
     }
 
@@ -291,6 +260,15 @@ const SettingsMenuBuilder = {
     container.addEventListener("click", this.hideSettingsMenu);
 
     document.body.appendChild(settingsButton);
+  },
+
+  toggleHideSettingsMenuButton(hide: boolean) {
+    if (hide) {
+      document.getElementById("settings-button")!.className = "hidden";
+      return;
+    }
+
+    document.getElementById("settings-button")!.className = "";
   },
 
   handleClick() {

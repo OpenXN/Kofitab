@@ -79,6 +79,10 @@ body {
     color: rgb(205, 205, 205);
 }
 
+.settings-input-max-length {
+    color: rgb(205, 205, 205);
+}
+
 .settings-type-input:hover {
     background-color: rgb(80, 80, 80);
 }

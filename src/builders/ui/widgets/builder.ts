@@ -1,4 +1,5 @@
-import { Settings, SettingsManager } from "../../../managers/settings/manager";
+import { Settings } from "../../../managers/settings/manager";
+import { StorageLoader } from "../../../managers/storage/loader";
 import { getTranslation } from "../../../utils/translations";
 import { BasicIcons } from "../../../utils/icons";
 
@@ -8,8 +9,7 @@ const WidgetsMenuBuilder = {
       "widgets-menu-container",
     )!;
 
-    const language = SettingsManager.getSetting(Settings.Language)
-      .value as string;
+    const language = StorageLoader.getValue(Settings.Language) as string;
 
     const title = document.createElement("p");
     title.className = "menu-title text";
@@ -26,7 +26,7 @@ const WidgetsMenuBuilder = {
 
     const container = document.getElementById("container")!;
 
-    if (SettingsManager.getSetting(Settings.HideWidgetsButton).value == true) {
+    if (StorageLoader.getValue(Settings.HideWidgetsButton) == Boolean(true)) {
       widgets_menu_button.classList.add("hidden");
     }
 
@@ -46,6 +46,15 @@ const WidgetsMenuBuilder = {
     container.addEventListener("click", this.hideWidgetsMenu);
 
     document.body.appendChild(widgets_menu_button);
+  },
+
+  toggleHideWidgetsMenuButton(hide: boolean) {
+    if (hide) {
+      document.getElementById("widgets-button")!.className = "hidden";
+      return;
+    }
+
+    document.getElementById("widgets-button")!.className = "";
   },
 
   handleClick() {
