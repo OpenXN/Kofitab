@@ -19,6 +19,11 @@
     }
 }
 
+#widgets-button.hidden,
+#settings-button.hidden {
+    transition: opacity 0.2s ease-in-out;
+}
+
 .slider:before {
     transition:
         transform 0.2s ease,
@@ -27,4 +32,8 @@
 
 .settings-input-max-length {
     transition: font-size 0.2s ease;
+}
+
+#settings-menu-container {
+    transition: right 0.2s ease;
 }

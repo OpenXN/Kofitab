@@ -2,6 +2,8 @@ html,
 body {
     margin: 0;
     height: 100%;
+    overflow-x: hidden;
+    overflow-y: hidden;
 }
 
 #wallpaper-container {
@@ -60,7 +62,6 @@ body {
 #settings-button.hidden {
     opacity: 0;
     pointer-events: auto;
-    transition: opacity 0.2s ease-in-out;
 }
 
 #widgets-button.hidden:hover,
@@ -89,17 +90,13 @@ body {
     box-sizing: border-box;
 }
 
-#widgets-menu-container.hidden,
 #settings-menu-container.hidden {
-    display: none;
-}
-
-#widgets-menu-container.show {
     position: absolute;
     top: 0;
-    left: 0;
-    width: 100vw;
-    height: 220px;
+    right: -450px;
+    width: 450px;
+    height: 100vh;
+    padding: 20px;
     z-index: 1;
     box-sizing: border-box;
     backdrop-filter: blur(10px);
@@ -107,8 +104,8 @@ body {
     border-bottom-right-radius: 12px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     user-select: none;
+    overflow-y: auto;
 }
 
 #settings-menu-container.show {
@@ -127,6 +124,23 @@ body {
     flex-direction: column;
     user-select: none;
     overflow-y: auto;
+}
+
+#widgets-menu-container.show {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 220px;
+    z-index: 1;
+    box-sizing: border-box;
+    backdrop-filter: blur(10px);
+    border-top-right-radius: 12px;
+    border-bottom-right-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
 }
 
 #debug-console {

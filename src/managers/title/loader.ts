@@ -14,7 +14,7 @@ const TitleLoader = {
     const customTitle = StorageLoader.getValue(Settings.CustomTitle) as string;
     if (customTitle !== null && customTitle !== "") {
       // im not going to allow long titles.
-      if (customTitle.length < defaults.MaxTitleLength) {
+      if (customTitle.length <= defaults.MaxTitleLength) {
         return customTitle;
       }
     }
