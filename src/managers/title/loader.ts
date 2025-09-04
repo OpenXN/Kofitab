@@ -1,6 +1,6 @@
 import { Settings } from "../settings/manager";
 import { StorageLoader } from "../storage/loader";
-import { getTranslation } from "../../utils/translations";
+import { translationManager, translationKeys } from "../translations/manager";
 import { defaults } from "../../utils/consts";
 
 /**
@@ -12,6 +12,7 @@ const TitleLoader = {
    */
   getTitle() {
     const customTitle = StorageLoader.getValue(Settings.CustomTitle) as string;
+
     if (customTitle !== null && customTitle !== "") {
       // im not going to allow long titles.
       if (customTitle.length <= defaults.MaxTitleLength) {
@@ -20,7 +21,7 @@ const TitleLoader = {
     }
 
     const language = StorageLoader.getValue(Settings.Language) as string;
-    return getTranslation(language, "new-tab");
+    return translationManager.getTranslation(language, translationKeys.newTab);
   },
 };
 

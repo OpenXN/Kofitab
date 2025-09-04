@@ -5,11 +5,13 @@ import {
   settings,
 } from "../../../managers/settings/manager";
 import { StorageLoader } from "../../../managers/storage/loader";
-import { getTranslation, translationKeys } from "../../../utils/translations";
+import {
+  translationManager,
+  translationKeys,
+  allTranslations,
+} from "../../../managers/translations/manager";
 import { BasicIcons } from "../../../utils/icons";
-import { getVersion } from "../../../utils/tools";
 import { StorageManager } from "../../../managers/storage/manager";
-
 import { SettingsChangeListener } from "../../../listeners/settings/listener";
 
 const SettingsMenuBuilder = {
@@ -17,11 +19,10 @@ const SettingsMenuBuilder = {
     const settings_menu_container = document.getElementById(
       "settings-menu-container",
     )!;
-    const language = StorageLoader.getValue(Settings.Language) as string;
 
     const title = document.createElement("p");
     title.className = "menu-title text";
-    title.textContent = getTranslation(language, translationKeys.settingsTitle);
+    title.setAttribute("translation-key", translationKeys.settingsTitle);
 
     settings_menu_container.appendChild(title);
 
@@ -29,26 +30,17 @@ const SettingsMenuBuilder = {
     settings_category_container.id = "settings-category-container";
 
     const categories = {
-      [SettingsCategory.General]: getTranslation(
-        language,
-        translationKeys.settingsGeneral,
-      ),
-      [SettingsCategory.Appearance]: getTranslation(
-        language,
-        translationKeys.settingsAppearance,
-      ),
-      [SettingsCategory.Advanced]: getTranslation(
-        language,
-        translationKeys.settingsAdvanced,
-      ),
+      [SettingsCategory.General]: translationKeys.settingsGeneral,
+      [SettingsCategory.Appearance]: translationKeys.settingsAppearance,
+      [SettingsCategory.Advanced]: translationKeys.settingsAdvanced,
     };
 
     const settings_footer_container = document.createElement("div")!;
     settings_footer_container.id = "settings-footer-container";
 
     const version = document.createElement("span");
-    version.className = "text";
-    version.textContent = `${getTranslation(language, translationKeys.version)}: ${getVersion()}`;
+    version.classList = "text";
+    version.setAttribute("translation-key", translationKeys.version);
     settings_footer_container.appendChild(version);
 
     Object.entries(categories).forEach(([key, value]) => {
@@ -64,8 +56,11 @@ const SettingsMenuBuilder = {
 
         if (setting.category === key) {
           const setting_item = document.createElement("div");
-          setting_item.className = "settings-item text";
-          setting_item.textContent = getTranslation(language, setting.id);
+          setting_item.className = "settings-item";
+
+          const setting_item_name = document.createElement("span");
+          setting_item_name.className = "settings-item text";
+          setting_item_name.setAttribute("translation-key", setting.id);
 
           // let setting_input_area: HTMLDivElement;
 
@@ -77,6 +72,8 @@ const SettingsMenuBuilder = {
           let slider: HTMLSpanElement;
 
           let container: HTMLDivElement;
+
+          const languages = Object.keys(allTranslations);
 
           switch (setting.type) {
             case SettingType.Toggle:
@@ -98,8 +95,8 @@ const SettingsMenuBuilder = {
                 SettingsChangeListener.onValueChanged(setting);
               });
 
+              setting_item.append(setting_item_name);
               settings_input_container.appendChild(label);
-
               setting_item.appendChild(settings_input_container);
               break;
             case SettingType.Input:
@@ -110,8 +107,8 @@ const SettingsMenuBuilder = {
               input.id = `settings-${setting.id}`;
 
               if (setting.needPlaceHolder) {
-                input.placeholder = getTranslation(
-                  language,
+                input.setAttribute(
+                  "translation-key-placeholder",
                   `${setting.id}PlaceHolder`,
                 );
               }
@@ -135,10 +132,9 @@ const SettingsMenuBuilder = {
                 settings_input_max_length.textContent = String(
                   setting.maxLength - String(setting.value).length,
                 );
-
                 container.appendChild(settings_input_max_length);
               }
-
+              setting_item.append(setting_item_name);
               setting_item.appendChild(container);
 
               input.addEventListener("input", () => {
@@ -150,7 +146,32 @@ const SettingsMenuBuilder = {
               select = document.createElement("select");
 
               select.id = `settings-${setting.id}`;
+              select.className = "settings-type-select";
 
+              switch (setting.id) {
+                case Settings.Language:
+                  languages.forEach((language) => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = language;
+                    optionElement.textContent =
+                      translationManager.getTranslation(
+                        language,
+                        translationKeys.languageName,
+                      );
+                    select.appendChild(optionElement);
+                  });
+                  break;
+              }
+
+              select.value = StorageLoader.getValue(
+                Settings.Language,
+              ) as string;
+
+              select.addEventListener("change", () => {
+                SettingsChangeListener.onValueChanged(setting);
+              });
+
+              setting_item.append(setting_item_name);
               setting_item.appendChild(select);
               break;
             case SettingType.Button:
@@ -158,13 +179,11 @@ const SettingsMenuBuilder = {
 
               button.id = `settings-${setting.id}`;
 
-              if (setting.buttonTitle != undefined) {
-                button.textContent = getTranslation(
-                  language,
-                  setting.buttonTitle,
-                );
+              if (setting.buttonTitle) {
+                button.setAttribute("translation-key", setting.buttonTitle);
               }
 
+              setting_item.append(setting_item_name);
               setting_item.appendChild(button);
               break;
             case SettingType.Number:
@@ -172,11 +191,13 @@ const SettingsMenuBuilder = {
               input.type = "number";
 
               input.id = `settings-${setting.id}`;
+              input.className = "settings-type-number";
 
               input.value = String(setting.value);
               input.min = String(setting.minValue);
               input.max = String(setting.maxValue);
 
+              setting_item.append(setting_item_name);
               setting_item.appendChild(input);
 
               input.addEventListener("input", () => {
@@ -198,8 +219,8 @@ const SettingsMenuBuilder = {
               input.id = `settings-${setting.id}`;
               input.className = "settings-type-input";
               if (setting.needPlaceHolder) {
-                input.placeholder = getTranslation(
-                  language,
+                input.setAttribute(
+                  "translation-key-placeholder",
                   `${setting.id}PlaceHolder`,
                 );
               }
@@ -210,6 +231,7 @@ const SettingsMenuBuilder = {
 
               button.id = `settings-${setting.id}`;
 
+              setting_item.append(setting_item_name);
               setting_item.appendChild(input);
               setting_item.appendChild(button);
               break;
@@ -221,7 +243,7 @@ const SettingsMenuBuilder = {
 
       const settings_category_title = document.createElement("p");
       settings_category_title.className = "category-title text";
-      settings_category_title.textContent = value;
+      settings_category_title.setAttribute("translation-key", value);
 
       category_container.append(settings_category_title);
       category_container.append(settings_container);

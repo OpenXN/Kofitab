@@ -178,10 +178,6 @@ body {
     border-radius: 8px;
 }
 
-.settings-item {
-    padding: 18px;
-}
-
 .text {
     font-family: "Arial";
 }
@@ -234,7 +230,7 @@ body {
     max-width: 190px;
     border: 0px solid;
     border-radius: 8px;
-    padding: 10px;
+    padding: 12px;
     outline: none;
     font-size: 12px;
 }
@@ -256,7 +252,24 @@ body {
     font-size: 12px;
 }
 
+.settings-type-number {
+    margin-left: 12px;
+    max-width: 50px;
+    border: 0px solid;
+    border-radius: 24px;
+    padding: 12px;
+    outline: none;
+    font-size: 12px;
+}
+
 .settings-type-select {
+    margin-left: 12px;
+    width: 100px;
+    max-width: 140px;
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 16px;
+    cursor: pointer;
 }
 
 .settings-type-button {
@@ -266,4 +279,5 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: 12px;
 }

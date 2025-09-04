@@ -1,15 +1,15 @@
 import { SettingsMenuBuilder } from "./builders/ui/settings/builder";
 import { WidgetsMenuBuilder } from "./builders/ui/widgets/builder";
 import { ThemeLoader } from "./managers/themes/loader";
-import { TitleLoader } from "./managers/title/loader";
 import { TitleManager } from "./managers/title/manager";
-import { addDebugConsole, Log } from "./utils/logger";
+import { Log } from "./utils/logger";
 import { StorageLoader } from "./managers/storage/loader";
 import { Settings, settings } from "./managers/settings/manager";
 import { WallpaperManager } from "./managers/wallpaper/manager";
 import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
 import { getVersion } from "./utils/tools";
+import { translationManager } from "./managers/translations/manager";
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -27,7 +27,7 @@ async function init() {
   });
 
   Log.Debug("Setting up tab title...");
-  TitleManager.setTitle(TitleLoader.getTitle());
+  TitleManager.updateTitle();
 
   Log.Debug("Setting up wallpaper...");
   WallpaperManager.setWallpaper(
@@ -56,7 +56,7 @@ async function init() {
   WidgetsMenuBuilder.addWidgetsMenu();
   WidgetsMenuBuilder.addWidgetsMenuButton();
 
-  if ((StorageLoader.getValue(Settings.DeveloperMode) as boolean) == true) {
-    addDebugConsole();
-  }
+  translationManager.setTranslation(
+    StorageLoader.getValue(Settings.Language) as string,
+  );
 }

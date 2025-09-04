@@ -7,28 +7,38 @@ import { SettingsMenuBuilder } from "../../builders/ui/settings/builder";
 import { WidgetsMenuBuilder } from "../../builders/ui/widgets/builder";
 import { defaults } from "../../utils/consts";
 import { TitleManager } from "../../managers/title/manager";
+import { translationManager } from "../../managers/translations/manager";
 
 const SettingsChangeListener = {
   onValueChanged(setting: Setting) {
-    const input = document.getElementById(
-      `settings-${setting.id}`,
-    )! as HTMLInputElement;
+    const element = document.getElementById(`settings-${setting.id}`);
 
-    switch (setting.id) {
-      case Settings.EnableAnimations: {
-        this.onEnableAnimationsChange(setting, input);
+    switch (true) {
+      case element instanceof HTMLInputElement: {
+        const input = element;
+        switch (setting.id) {
+          case Settings.EnableAnimations:
+            this.onEnableAnimationsChange(setting, input);
+            break;
+          case Settings.HideSettingsButton:
+            this.onHideSettingsButtonChange(setting, input);
+            break;
+          case Settings.HideWidgetsButton:
+            this.onHideWidgetsButtonChange(setting, input);
+            break;
+          case Settings.CustomTitle:
+            this.onTitleInputChange(setting, input);
+            break;
+        }
         break;
       }
-      case Settings.HideSettingsButton: {
-        this.onHideSettingsButtonChange(setting, input);
-        break;
-      }
-      case Settings.HideWidgetsButton: {
-        this.onHideWidgetsButtonChange(setting, input);
-        break;
-      }
-      case Settings.CustomTitle: {
-        this.onTitleInputChange(setting, input);
+      case element instanceof HTMLSelectElement: {
+        const select = element;
+        switch (setting.id) {
+          case Settings.Language:
+            this.onLanguageChanged(setting, select);
+            break;
+        }
         break;
       }
     }
@@ -105,10 +115,16 @@ const SettingsChangeListener = {
 
       StorageManager.saveValue(setting.id, setting.value);
 
-      TitleManager.setTitle(
-        StorageLoader.getValue(Settings.CustomTitle) as string,
-      );
+      TitleManager.updateTitle();
     }
+  },
+
+  onLanguageChanged(setting: Setting, select: HTMLSelectElement) {
+    setting.value = select.value;
+
+    StorageManager.saveValue(setting.id, setting.value);
+
+    translationManager.setTranslation(setting.value);
   },
 };
 

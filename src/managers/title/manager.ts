@@ -1,3 +1,5 @@
+import { TitleLoader } from "./loader";
+
 /**
  * Responsible set the tab title.
  */
@@ -5,9 +7,9 @@ const TitleManager = {
   /**
    * Updates the tab title.
    */
-  setTitle(title: string) {
+  updateTitle() {
     const tabTitle = document.getElementById("title") as HTMLImageElement;
-    tabTitle.textContent = title;
+    tabTitle.textContent = TitleLoader.getTitle();
   },
 };
 

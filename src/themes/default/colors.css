@@ -81,3 +81,22 @@ body {
 .settings-type-input:hover {
     background-color: rgb(80, 80, 80);
 }
+
+.settings-type-number {
+    background-color: rgb(70, 70, 70);
+    color: rgb(205, 205, 205);
+}
+
+.settings-type-number:hover {
+    background-color: rgb(80, 80, 80);
+}
+
+.settings-type-select {
+    border: 1px solid rgb(70, 70, 70);
+    background-color: rgb(70, 70, 70);
+    color: rgb(205, 205, 205);
+}
+
+.settings-type-select:hover {
+    background-color: rgb(80, 80, 80);
+}

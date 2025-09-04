@@ -1,6 +1,6 @@
 import { Settings } from "../../../managers/settings/manager";
 import { StorageLoader } from "../../../managers/storage/loader";
-import { getTranslation } from "../../../utils/translations";
+import { translationKeys } from "../../../managers/translations/manager";
 import { BasicIcons } from "../../../utils/icons";
 
 const WidgetsMenuBuilder = {
@@ -9,11 +9,9 @@ const WidgetsMenuBuilder = {
       "widgets-menu-container",
     )!;
 
-    const language = StorageLoader.getValue(Settings.Language) as string;
-
     const title = document.createElement("p");
     title.className = "menu-title text";
-    title.textContent = getTranslation(language, "widgets-title");
+    title.setAttribute("translation-key", translationKeys.widgetsTitle);
 
     widgets_menu_container.appendChild(title);
 
