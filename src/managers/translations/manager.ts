@@ -4,6 +4,7 @@ import hu from "../../../_locales/hu/translations.json";
 import { Settings } from "../settings/manager";
 import { StorageManager } from "../storage/manager";
 import { Log } from "../../utils/logger";
+import { getVersion } from "../../utils/tools";
 
 const allTranslations: Record<string, Record<string, string>> = { en, hu };
 
@@ -35,6 +36,9 @@ const translationManager = {
       element.textContent = this.getTranslation(language, key);
     });
 
+    const version = document.getElementById("version")!;
+    version.textContent = `${this.getTranslation(language, translationKeys.version)}: ${getVersion()}`;
+
     inputPlaceholders.forEach((input) => {
       const key = input.getAttribute("translation-key-placeholder")!;
       input.placeholder = this.getTranslation(language, key);
@@ -56,6 +60,7 @@ const translationKeys = {
   settingsAdvanced: "settings-advanced",
 
   themeBrowser: "theme-browser",
+  wallpaperBrowser: "wallpaper-browser",
 
   enableAnimations: "enableAnimations",
   settingsButtonVisible: "settingsButtonVisible",
@@ -73,6 +78,7 @@ const translationKeys = {
   dateFormat: "date-format",
 
   version: "version",
+  footerInfo: "footer-info",
   author: "author",
 };
 

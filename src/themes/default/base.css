@@ -100,8 +100,7 @@ body {
     z-index: 1;
     box-sizing: border-box;
     backdrop-filter: blur(10px);
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     user-select: none;
@@ -118,8 +117,7 @@ body {
     z-index: 1;
     box-sizing: border-box;
     backdrop-filter: blur(10px);
-    border-top-right-radius: 12px;
-    border-bottom-right-radius: 12px;
+    border-radius: 12px;
     display: flex;
     flex-direction: column;
     user-select: none;
@@ -179,11 +177,27 @@ body {
 }
 
 .text {
-    font-family: "Arial";
+    font-family: var(--custom-font, Arial);
 }
 
 #settings-footer-container {
-    margin: 30px;
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    margin: 20px;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.footer-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .switch {
@@ -264,8 +278,7 @@ body {
 
 .settings-type-select {
     margin-left: 12px;
-    width: 100px;
-    max-width: 140px;
+    max-width: 160px;
     padding: 12px;
     font-size: 12px;
     border-radius: 16px;
@@ -273,6 +286,13 @@ body {
 }
 
 .settings-type-button {
+    margin-left: 12px;
+    width: 160px;
+    max-width: 180px;
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 16px;
+    cursor: pointer;
 }
 
 .settings-item {

@@ -2,6 +2,7 @@ import { defaults } from "../../utils/consts";
 
 enum ButtonTitles {
   Themes = "theme-browser",
+  Wallpapers = "wallpaper-browser",
 }
 
 enum Settings {
@@ -78,6 +79,7 @@ const settings: Setting[] = [
     id: Settings.Wallpaper,
     category: SettingsCategory.Appearance,
     type: SettingType.Button, // Wallpapers browser
+    buttonTitle: ButtonTitles.Wallpapers,
     value: defaults.Wallpaper,
 
     required: true,

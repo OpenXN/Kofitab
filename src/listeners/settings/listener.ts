@@ -8,6 +8,7 @@ import { WidgetsMenuBuilder } from "../../builders/ui/widgets/builder";
 import { defaults } from "../../utils/consts";
 import { TitleManager } from "../../managers/title/manager";
 import { translationManager } from "../../managers/translations/manager";
+import { FontLoader } from "../../managers/fonts/loader";
 
 const SettingsChangeListener = {
   onValueChanged(setting: Setting) {
@@ -37,6 +38,9 @@ const SettingsChangeListener = {
         switch (setting.id) {
           case Settings.Language:
             this.onLanguageChanged(setting, select);
+            break;
+          case Settings.Font:
+            this.onFontChanged(setting, select);
             break;
         }
         break;
@@ -125,6 +129,14 @@ const SettingsChangeListener = {
     StorageManager.saveValue(setting.id, setting.value);
 
     translationManager.setTranslation(setting.value);
+  },
+
+  onFontChanged(setting: Setting, select: HTMLSelectElement) {
+    setting.value = select.value;
+
+    StorageManager.saveValue(setting.id, setting.value);
+
+    FontLoader.loadFont(setting.value);
   },
 };
 

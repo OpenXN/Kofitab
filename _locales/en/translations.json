@@ -10,6 +10,7 @@
   "settings-advanced": "Advanced",
 
   "theme-browser": "Browse themes",
+  "wallpaper-browser": "Change wallpaper",
 
   "enableAnimations": "Enable animations",
   "hideSettingsButton": "Hide settings button",
@@ -30,6 +31,7 @@
   "date-format": "mm/dd/yyyy",
 
   "version": "Version",
+  "footer-info": "Made with ❤️ by Bence Fodor",
 
-  "author": "BXn4"
+  "translation-author": "Bence Fodor"
 }

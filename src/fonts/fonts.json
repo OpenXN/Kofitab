@@ -1,10 +1,34 @@
 [
   {
     "name": "Caviar Dreams",
-    "path": "../assets/fonts/CaviarDreams/CaviarDreams.ttf"
+    "path": "../assets/fonts/CaviarDreams/CaviarDreams.woff2"
   },
   {
     "name": "Creato Display",
-    "path": "../assets/fonts/CreatoDisplay/CreatoDisplay-Light.otf"
+    "path": "../assets/fonts/CreatoDisplay/CreatoDisplay-Regular.woff2"
+  },
+  {
+    "name": "Arial",
+    "path": null
+  },
+  {
+    "name": "Helvetica",
+    "path": null
+  },
+  {
+    "name": "Times New Roman",
+    "path": null
+  },
+  {
+    "name": "Georgia",
+    "path": null
+  },
+  {
+    "name": "Courier New",
+    "path": null
+  },
+  {
+    "name": "Monaco",
+    "path": null
   }
 ]

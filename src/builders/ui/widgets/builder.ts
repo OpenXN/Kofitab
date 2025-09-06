@@ -1,7 +1,7 @@
 import { Settings } from "../../../managers/settings/manager";
 import { StorageLoader } from "../../../managers/storage/loader";
 import { translationKeys } from "../../../managers/translations/manager";
-import { BasicIcons } from "../../../utils/icons";
+import { Icons } from "../../../utils/icons";
 
 const WidgetsMenuBuilder = {
   addWidgetsMenu() {
@@ -29,7 +29,7 @@ const WidgetsMenuBuilder = {
     }
 
     const icon = new DOMParser().parseFromString(
-      BasicIcons.Menu,
+      Icons.Basic.Menu,
       "image/svg+xml",
     ).documentElement;
     icon.setAttribute("width", "24");

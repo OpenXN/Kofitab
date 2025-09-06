@@ -10,6 +10,7 @@
   "settings-advanced": "Haladó",
 
   "theme-browser": "Témák böngészése",
+  "wallpaper-browser": "Háttér beállítása",
 
   "enableAnimations": "Animációk engedélyezése",
   "hideSettingsButton": "Beállítások gomb elrejtése",
@@ -30,6 +31,7 @@
   "date-format": "yyyy/mm/dd",
 
   "version": "Verzió",
+  "footer-info": "Készült szeretettel ❤️ Bence Fodor",
 
-  "author": "BXn4"
+  "translation-author": "Bence Fodor"
 }

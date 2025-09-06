@@ -19,7 +19,7 @@ const defaults = {
   MinGridCells: 2,
   MaxGridCells: 20,
   MaxTitleLength: 24,
-  Font: "Creato Display",
+  Font: "Caviar Dreams",
   CustomFont: "",
 };
 

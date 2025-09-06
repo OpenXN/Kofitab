@@ -1,10 +1,11 @@
 #wallpaper,
 #widgets-overlay {
-    animation: fade-in 0.1s ease-in;
+    animation: fade-in 0.3s ease-in;
 }
 
-#menu-button:hover,
-#settings-button:hover {
+#widgets-button:hover,
+#settings-button:hover,
+.footer-icon:hover {
     transform: scale(1.1);
 }
 

@@ -5,6 +5,7 @@ import { Log } from "../../utils/logger";
 const FontLoader = {
   getFontsStyle(): string {
     return fonts
+      .filter((font) => font.path)
       .map((font) =>
         `
           @font-face {
@@ -31,12 +32,7 @@ const FontLoader = {
       return;
     }
 
-    const texts = document.querySelectorAll(".text");
-
-    texts.forEach((text) => {
-      (text as HTMLElement).style.fontFamily = font.name;
-    });
-
+    document.documentElement.style.setProperty("--custom-font", `${font.name}`);
     Log.Debug(`Font ${font.name} was loaded!`);
   },
 };

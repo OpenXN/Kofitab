@@ -100,3 +100,17 @@ body {
 .settings-type-select:hover {
     background-color: rgb(80, 80, 80);
 }
+
+.settings-type-button {
+    border: 1px solid rgb(70, 70, 70);
+    color: rgb(205, 205, 205);
+    background-color: rgb(70, 70, 70);
+}
+
+.settings-type-button:hover {
+    background-color: rgb(80, 80, 80);
+}
+
+#settings-footer-container {
+    background-color: rgba(53, 61, 65, 0.3);
+}

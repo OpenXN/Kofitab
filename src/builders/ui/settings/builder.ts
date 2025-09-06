@@ -10,9 +10,10 @@ import {
   translationKeys,
   allTranslations,
 } from "../../../managers/translations/manager";
-import { BasicIcons } from "../../../utils/icons";
+import { Icons } from "../../../utils/icons";
 import { StorageManager } from "../../../managers/storage/manager";
 import { SettingsChangeListener } from "../../../listeners/settings/listener";
+import fonts from "../../../fonts/fonts.json";
 
 const SettingsMenuBuilder = {
   addSettingsMenu() {
@@ -38,10 +39,60 @@ const SettingsMenuBuilder = {
     const settings_footer_container = document.createElement("div")!;
     settings_footer_container.id = "settings-footer-container";
 
+    const footerLeft = document.createElement("div");
+    footerLeft.className = "footer-left";
+
     const version = document.createElement("span");
-    version.classList = "text";
+    version.className = "footer-version text";
+    version.id = "version";
     version.setAttribute("translation-key", translationKeys.version);
-    settings_footer_container.appendChild(version);
+
+    const footerInfo = document.createElement("span");
+    footerInfo.className = "footer-info text";
+    footerInfo.setAttribute("translation-key", translationKeys.footerInfo);
+
+    footerLeft.appendChild(version);
+    footerLeft.appendChild(footerInfo);
+
+    const footerIcons = document.createElement("div");
+    footerIcons.className = "footer-icons";
+
+    const home = document.createElement("a");
+    home.href = "https://kofitab.net";
+    home.target = "_blank";
+    home.className = "footer-icon";
+
+    const homeIcon = new DOMParser().parseFromString(
+      Icons.Footer.Home,
+      "image/svg+xml",
+    ).documentElement;
+
+    homeIcon.setAttribute("width", "24");
+    homeIcon.setAttribute("height", "24");
+    homeIcon.classList = "icon";
+
+    home.append(homeIcon);
+    footerIcons.appendChild(home);
+
+    const github = document.createElement("a");
+    github.href = "https://github.com/openXN/kofitab";
+    github.target = "_blank";
+    github.className = "footer-icon";
+
+    const githubIcon = new DOMParser().parseFromString(
+      Icons.Footer.Github,
+      "image/svg+xml",
+    ).documentElement;
+
+    githubIcon.setAttribute("width", "24");
+    githubIcon.setAttribute("height", "24");
+    githubIcon.classList = "icon";
+
+    github.append(githubIcon);
+    footerIcons.appendChild(github);
+
+    settings_footer_container.appendChild(footerLeft);
+    settings_footer_container.appendChild(footerIcons);
 
     Object.entries(categories).forEach(([key, value]) => {
       const category_container = document.createElement("div");
@@ -158,14 +209,28 @@ const SettingsMenuBuilder = {
                         language,
                         translationKeys.languageName,
                       );
+
                     select.appendChild(optionElement);
+
+                    select.value = StorageLoader.getValue(
+                      Settings.Language,
+                    ) as string;
+                  });
+                  break;
+                case Settings.Font:
+                  fonts.forEach((font) => {
+                    const optionElement = document.createElement("option");
+                    optionElement.value = font.name;
+                    optionElement.textContent = font.name;
+
+                    select.appendChild(optionElement);
+
+                    select.value = StorageLoader.getValue(
+                      Settings.Font,
+                    ) as string;
                   });
                   break;
               }
-
-              select.value = StorageLoader.getValue(
-                Settings.Language,
-              ) as string;
 
               select.addEventListener("change", () => {
                 SettingsChangeListener.onValueChanged(setting);
@@ -178,6 +243,7 @@ const SettingsMenuBuilder = {
               button = document.createElement("button");
 
               button.id = `settings-${setting.id}`;
+              button.className = "settings-type-button";
 
               if (setting.buttonTitle) {
                 button.setAttribute("translation-key", setting.buttonTitle);
@@ -267,7 +333,7 @@ const SettingsMenuBuilder = {
     }
 
     const icon = new DOMParser().parseFromString(
-      BasicIcons.Settings,
+      Icons.Basic.Settings,
       "image/svg+xml",
     ).documentElement;
     icon.setAttribute("width", "24");
