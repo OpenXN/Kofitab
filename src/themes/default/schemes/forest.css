@@ -1,0 +1,116 @@
+body {
+    background-color: #000000;
+}
+
+#widgets-button:hover,
+#settings-button:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.icon {
+    fill: #4caf50;
+}
+
+.widget-area.visible {
+    border: 1px dashed #3d3d3d;
+}
+
+#widgets-menu-container.show {
+    background-color: rgba(0, 80, 5, 0.3);
+    border: 1px solid rgba(0, 255, 9, 0.1);
+}
+
+#settings-menu-container {
+    background-color: rgba(0, 80, 5, 0.3);
+    border: 1px solid rgba(0, 255, 9, 0.1);
+}
+
+#debug-console {
+    background-color: rgba(0, 80, 5, 0.3);
+    border: 1px solid rgba(0, 255, 9, 0.1);
+}
+
+.settings-container {
+    background-color: rgba(53, 61, 65, 0.3);
+}
+
+.text {
+    color: white;
+}
+
+.slider {
+    background: linear-gradient(145deg, #005c03, #003802);
+    box-shadow:
+        inset 2px 2px 4px rgba(0, 0, 0, 0.5),
+        inset -2px -2px 4px rgba(60, 60, 60, 0.2);
+}
+
+.slider:before {
+    background: linear-gradient(145deg, #f0f0f0, #dcdcdc);
+    box-shadow:
+        0 2px 6px rgba(0, 0, 0, 0.4),
+        inset 1px 1px 2px rgba(255, 255, 255, 0.6);
+}
+
+.switch input:checked + .slider,
+.settings-type-toggle:checked + .slider {
+    background: linear-gradient(145deg, #014002, #002601);
+    box-shadow:
+        inset 2px 2px 6px rgba(0, 0, 0, 0.6),
+        inset -2px -2px 4px rgba(100, 100, 100, 0.3);
+}
+
+.switch input:checked + .slider:before,
+.settings-type-toggle:checked + .slider:before {
+    background: linear-gradient(145deg, #ffffff, #e5e5e5);
+}
+
+.slider:hover {
+    background: linear-gradient(145deg, #014503, #013603);
+}
+
+.settings-type-input {
+    background-color: rgb(10, 60, 10);
+    color: rgb(205, 205, 205);
+}
+
+.settings-input-max-length {
+    color: rgb(205, 205, 205);
+}
+
+.settings-type-input:hover {
+    background-color: rgb(10, 70, 10);
+}
+
+.settings-type-number {
+    background-color: rgb(10, 60, 10);
+    color: rgb(205, 205, 205);
+}
+
+.settings-type-number:hover {
+    background-color: rgb(10, 70, 10);
+}
+
+.settings-type-select {
+    border: 1px solid rgb(10, 70, 10);
+    background-color: rgb(10, 70, 10);
+    color: rgb(205, 205, 205);
+}
+
+.settings-type-select:hover {
+    background-color: rgb(10, 70, 10);
+}
+
+.settings-type-button {
+    border: 1px solid rgb(10, 70, 10);
+    color: rgb(205, 205, 205);
+    background-color: rgb(10, 70, 10);
+}
+
+.settings-type-button:hover {
+    background-color: rgb(10, 70, 10);
+}
+
+#settings-footer-container {
+    background-color: rgba(10, 70, 10, 0.3);
+}

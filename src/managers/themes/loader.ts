@@ -76,7 +76,12 @@ const ThemeLoader = {
       const themeConfig = await fetch(theme.path);
 
       const themeInfo = (await themeConfig.json()) as Theme;
+      let selectedScheme = themeInfo.defaultScheme;
+
+      // Log.Debug(`selectedScheme default: ${selectedScheme}`);
+
       // Allowing only: base, colors, animations and extra (extra if you want to add more things).
+      // If your theme not going to have different colors (schemes, then you can add colors in the parts.)
       for (const [key, value] of Object.entries(themeInfo.parts ?? {})) {
         if (themeParts.length > 0 && !themeParts.includes(key)) {
           continue;
@@ -86,7 +91,7 @@ const ThemeLoader = {
           key == "animations" &&
           StorageLoader.getValue(Settings.EnableAnimations) == Boolean(false)
         ) {
-          return;
+          continue;
         }
 
         Log.Debug(`Loading theme ${themeInfo.name} style part: ${key}`);
@@ -96,6 +101,29 @@ const ThemeLoader = {
         link.href = `../themes/${theme.id}/${value}`;
         link.id = `${themeInfo.id}-${key}`;
         document.head.appendChild(link);
+      }
+
+      for (const scheme of Object.keys(themeInfo.schemes ?? {})) {
+        if (themeParts.length > 0 && !themeParts.includes(scheme)) {
+          continue;
+        }
+
+        if (themeParts.includes(scheme)) {
+          selectedScheme = scheme;
+          const themeScheme = themeInfo.schemes?.[selectedScheme];
+          if (themeScheme) {
+            Log.Debug(
+              `Loading theme ${themeInfo.name} scheme: ${themeScheme.name}`,
+            );
+
+            const link = document.createElement("link");
+            link.rel = "stylesheet";
+            link.href = `../themes/${theme.id}/schemes/${themeScheme.file}`;
+            link.id = `${themeInfo.id}-${selectedScheme}`;
+            document.head.appendChild(link);
+          }
+          break;
+        }
       }
 
       Log.Debug(`Loaded theme: ${themeInfo.name} by ${themeInfo.author}`);

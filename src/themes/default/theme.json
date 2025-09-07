@@ -2,12 +2,24 @@
   "id": "default",
   "name": "Default",
   "category": "Theme",
-  "author": "BXn4",
+  "author": "Bence Fodor",
   "description": "Default layout design",
   "parts": {
     "base": "base.css",
-    "colors": "colors.css",
     "animations": "animations.css"
   },
+  "schemes": {
+    "gray": {
+      "name": "Gray",
+      "file": "gray.css",
+      "thumbnail": "themes/default/schemes/gray.png"
+    },
+    "forest": {
+      "name": "Forest",
+      "file": "forest.css",
+      "thumbnail": "themes/default/schemes/forest.png"
+    }
+  },
+  "defaultScheme": "gray",
   "thumbnail": "themes/default/preview.png"
 }

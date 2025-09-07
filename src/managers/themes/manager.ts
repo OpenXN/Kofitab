@@ -7,8 +7,16 @@ interface Theme {
   author?: string;
   description?: string;
   parts?: Record<string, string>;
+  schemes?: Record<string, Schemes>;
+  defaultScheme?: string;
   thumbnail?: string;
   path?: string; // Using external themes are allowed!
+}
+
+interface Schemes {
+  name: string;
+  file: string;
+  thumbnail: string;
 }
 
 const ThemeManager = {
