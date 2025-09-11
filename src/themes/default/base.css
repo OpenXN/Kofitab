@@ -301,3 +301,45 @@ body {
     justify-content: space-between;
     padding: 12px;
 }
+
+.browser.show {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+    z-index: 2;
+    box-sizing: border-box;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    transform: translate(-50%, -50%);
+}
+
+.browser.hidden {
+    position: fixed;
+    top: -50%;
+    left: 50%;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+    z-index: 2;
+    box-sizing: border-box;
+    backdrop-filter: blur(12px);
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    user-select: none;
+    transform: translate(-50%, -50%);
+}
+
+.browser-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 24px;
+}

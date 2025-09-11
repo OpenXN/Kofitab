@@ -114,3 +114,13 @@ body {
 #settings-footer-container {
     background-color: rgba(53, 61, 65, 0.3);
 }
+
+.browser {
+    background-color: rgba(30, 34, 38, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.browser-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+}

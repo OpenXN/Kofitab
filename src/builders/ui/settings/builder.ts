@@ -249,6 +249,10 @@ const SettingsMenuBuilder = {
                 button.setAttribute("translation-key", setting.buttonTitle);
               }
 
+              button.addEventListener("click", () => {
+                SettingsChangeListener.onButtonPressed(setting);
+              });
+
               setting_item.append(setting_item_name);
               setting_item.appendChild(button);
               break;

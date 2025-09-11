@@ -54,6 +54,7 @@ const translationKeys = {
   newTab: "new-tab",
   settingsTitle: "settings-title",
   widgetsTitle: "widgets-title",
+  wallpaperBrowserTitle: "wallpaper-browser-title",
 
   settingsGeneral: "settings-general",
   settingsAppearance: "settings-appearance",

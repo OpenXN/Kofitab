@@ -10,6 +10,7 @@ import { GridsBuilder } from "./builders/grids/builder";
 import { FontLoader } from "./managers/fonts/loader";
 import { getVersion } from "./utils/tools";
 import { translationManager } from "./managers/translations/manager";
+import { wallpaperBrowserBuilder } from "./builders/browsers/wallpaper/builder";
 
 document.addEventListener("DOMContentLoaded", () => {
   init();
@@ -55,6 +56,8 @@ async function init() {
 
   WidgetsMenuBuilder.addWidgetsMenu();
   WidgetsMenuBuilder.addWidgetsMenuButton();
+
+  wallpaperBrowserBuilder.addBrowser();
 
   translationManager.setTranslation(
     StorageLoader.getValue(Settings.Language) as string,

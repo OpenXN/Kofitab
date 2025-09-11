@@ -48,6 +48,15 @@ const SettingsChangeListener = {
     }
   },
 
+  onButtonPressed(setting: Setting) {
+    switch (setting.id) {
+      case Settings.Wallpaper: {
+        this.onChangeWallpaperButtonPressed();
+        break;
+      }
+    }
+  },
+
   onEnableAnimationsChange(setting: Setting, input: HTMLInputElement) {
     setting.value = input.checked;
 
@@ -137,6 +146,25 @@ const SettingsChangeListener = {
     StorageManager.saveValue(setting.id, setting.value);
 
     FontLoader.loadFont(setting.value);
+  },
+
+  onChangeWallpaperButtonPressed() {
+    const wallpaper_browser = document.getElementById("wallpaper-browser")!;
+    if (wallpaper_browser.classList.contains("hidden")) {
+      wallpaper_browser.classList.remove("hidden");
+      wallpaper_browser.classList.add("show");
+    } else if (wallpaper_browser.classList.contains("show")) {
+      wallpaper_browser.classList.remove("show");
+      wallpaper_browser.classList.add("hidden");
+    }
+
+    const container = document.getElementById("container")!;
+
+    // TODO: BIND ONCE ALL EVENT LISTENERS.
+    container.addEventListener("click", () => {
+      wallpaper_browser.classList.remove("show");
+      wallpaper_browser.classList.add("hidden");
+    });
   },
 };
 
