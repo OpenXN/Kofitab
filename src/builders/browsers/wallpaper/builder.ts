@@ -70,7 +70,7 @@ const wallpaperBrowserBuilder = {
     const container = document.getElementById("container")!;
 
     container.addEventListener("click", () => {
-      this.onChangeWallpaperButtonPressed();
+      this.hideWallpaperBrowser();
     });
   },
 
@@ -83,6 +83,12 @@ const wallpaperBrowserBuilder = {
       wallpaper_browser.classList.remove("show");
       wallpaper_browser.classList.add("hidden");
     }
+  },
+
+  hideWallpaperBrowser() {
+    const wallpaper_browser = document.getElementById("wallpaper-browser")!;
+    wallpaper_browser.classList.remove("show");
+    wallpaper_browser.classList.add("hidden");
   },
 
   addCategoryFilterToOnline() {},
