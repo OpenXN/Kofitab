@@ -336,10 +336,52 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.browser-header {
+.browser {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
+}
+
+.browser-header-container {
+    padding: 12px;
     font-size: 24px;
+}
+
+#close-button {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 10px;
+    right: 10px;
+    z-index: 1;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    background: transparent;
+}
+
+.browser-footer {
+    padding: 15px;
+    gap: 12px;
+    display: flex;
+    justify-content: center;
+}
+
+.wallpaper-browser-footer-buttons-container {
+    display: flex;
+    gap: 12px;
+}
+
+.wallpaper-browser-footer-buttons {
+    margin-left: 12px;
+    width: 100px;
+    max-width: 120px;
+    padding: 12px;
+    font-size: 12px;
+    border-radius: 16px;
+    cursor: pointer;
 }

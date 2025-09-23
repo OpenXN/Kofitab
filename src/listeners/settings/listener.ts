@@ -9,6 +9,7 @@ import { defaults } from "../../utils/consts";
 import { TitleManager } from "../../managers/title/manager";
 import { translationManager } from "../../managers/translations/manager";
 import { FontLoader } from "../../managers/fonts/loader";
+import { Log } from "../../utils/logger";
 
 const SettingsChangeListener = {
   onValueChanged(setting: Setting) {
@@ -82,6 +83,7 @@ const SettingsChangeListener = {
           themeParts.includes("animations")
         ) {
           ThemeManager.removeFromDOM(`${themeID}-animations`);
+          Log.Debug("Unloaded the animations!");
         }
 
         if (
@@ -89,6 +91,7 @@ const SettingsChangeListener = {
           themeParts.includes("animations")
         ) {
           ThemeLoader.loadTheme(themeID, ["animations"]);
+          Log.Debug("Reloaded the animations!");
         }
       }
     }
@@ -157,14 +160,6 @@ const SettingsChangeListener = {
       wallpaper_browser.classList.remove("show");
       wallpaper_browser.classList.add("hidden");
     }
-
-    const container = document.getElementById("container")!;
-
-    // TODO: BIND ONCE ALL EVENT LISTENERS.
-    container.addEventListener("click", () => {
-      wallpaper_browser.classList.remove("show");
-      wallpaper_browser.classList.add("hidden");
-    });
   },
 };
 

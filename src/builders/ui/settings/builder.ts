@@ -154,7 +154,7 @@ const SettingsMenuBuilder = {
               input = document.createElement("input");
               input.type = "text";
 
-              input.className = "settings-type-input";
+              input.className = "text settings-type-input";
               input.id = `settings-${setting.id}`;
 
               if (setting.needPlaceHolder) {
@@ -197,7 +197,7 @@ const SettingsMenuBuilder = {
               select = document.createElement("select");
 
               select.id = `settings-${setting.id}`;
-              select.className = "settings-type-select";
+              select.className = "text settings-type-select";
 
               switch (setting.id) {
                 case Settings.Language:
@@ -243,7 +243,7 @@ const SettingsMenuBuilder = {
               button = document.createElement("button");
 
               button.id = `settings-${setting.id}`;
-              button.className = "settings-type-button";
+              button.className = "text settings-type-button";
 
               if (setting.buttonTitle) {
                 button.setAttribute("translation-key", setting.buttonTitle);
@@ -261,7 +261,7 @@ const SettingsMenuBuilder = {
               input.type = "number";
 
               input.id = `settings-${setting.id}`;
-              input.className = "settings-type-number";
+              input.className = "text settings-type-number";
 
               input.value = String(setting.value);
               input.min = String(setting.minValue);
@@ -287,7 +287,7 @@ const SettingsMenuBuilder = {
               input.type = "text";
 
               input.id = `settings-${setting.id}`;
-              input.className = "settings-type-input";
+              input.className = "text settings-type-input";
               if (setting.needPlaceHolder) {
                 input.setAttribute(
                   "translation-key-placeholder",

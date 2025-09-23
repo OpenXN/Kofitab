@@ -35,7 +35,7 @@ body {
 }
 
 .text {
-    color: white;
+    color: rgb(205, 205, 205);
 }
 
 .slider {
@@ -71,7 +71,6 @@ body {
 
 .settings-type-input {
     background-color: rgb(70, 70, 70);
-    color: rgb(205, 205, 205);
 }
 
 .settings-input-max-length {
@@ -84,7 +83,6 @@ body {
 
 .settings-type-number {
     background-color: rgb(70, 70, 70);
-    color: rgb(205, 205, 205);
 }
 
 .settings-type-number:hover {
@@ -94,7 +92,6 @@ body {
 .settings-type-select {
     border: 1px solid rgb(70, 70, 70);
     background-color: rgb(70, 70, 70);
-    color: rgb(205, 205, 205);
 }
 
 .settings-type-select:hover {
@@ -103,7 +100,6 @@ body {
 
 .settings-type-button {
     border: 1px solid rgb(70, 70, 70);
-    color: rgb(205, 205, 205);
     background-color: rgb(70, 70, 70);
 }
 
@@ -120,7 +116,21 @@ body {
     border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-.browser-header {
+.browser-header-container {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     color: #fff;
+}
+
+.wallpaper-browser-footer-buttons {
+    border: 1px solid rgb(70, 70, 70);
+    background-color: rgb(70, 70, 70);
+}
+
+.wallpaper-browser-footer-buttons:hover {
+    background-color: rgb(80, 80, 80);
+}
+
+.wallpaper-browser-footer-buttons.selected {
+    border: 1px solid rgb(100, 100, 100);
+    background-color: rgb(100, 100, 100);
 }

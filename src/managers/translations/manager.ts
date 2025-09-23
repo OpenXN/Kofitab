@@ -52,6 +52,7 @@ const translationKeys = {
   language: "lang",
   languageName: "lang-name",
   newTab: "new-tab",
+
   settingsTitle: "settings-title",
   widgetsTitle: "widgets-title",
   wallpaperBrowserTitle: "wallpaper-browser-title",
@@ -77,6 +78,9 @@ const translationKeys = {
   customFont: "customFont",
 
   dateFormat: "date-format",
+
+  wallpaperBrowserButtonOnline: "wallpaper-browser-button-online",
+  wallpaperBrowserButtonLocal: "wallpaper-browser-button-local",
 
   version: "version",
   footerInfo: "footer-info",

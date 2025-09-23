@@ -11,7 +11,7 @@ const defaults = {
   CustomTitle: "",
   Language: "en",
   DeveloperMode: false,
-  Themes: "default[base, animations]$",
+  Themes: "default[base, animations, gray]$",
   GridRows: 14,
   GridCells: 7,
   MinGridRows: 2,
